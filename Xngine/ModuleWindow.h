@@ -1,5 +1,5 @@
 #ifndef __ModuleWindow_H__
-#define __ModuleWindow_H__
+#define __ModuleWindow_H__ //TODO
 
 #include "Module.h"
 #include "SDL.h"
@@ -8,32 +8,20 @@ class Application;
 
 class ModuleWindow : public Module
 {
+
 public:
+
+	SDL_Window* window = NULL;			//The window we'll be rendering to
+	SDL_Surface* screen_surface = NULL;	//The surface contained by the window
+
+public:
+
 	ModuleWindow();
-	// Destructor
-	virtual ~ModuleWindow();
+	~ModuleWindow();
+
+	// ----------- Module Functions ---------- //
 	bool Init();
-	bool CleanUp();		// Called before quitting
-
-	const int GetWidth() const {
-		return width;
-	}
-	const int GetHeight() const {
-		return height;
-	}
-
-	void SetAspectRatio(int _width, int _height);
-
-public:
-	//The window we'll be rendering to
-	SDL_Window* window = NULL;
-
-	//The surface contained by the window
-	SDL_Surface* screen_surface = NULL;
-
-private:
-	int width;
-	int height;
+	bool CleanUp();
 };
 
 #endif // __ModuleWindow_H__

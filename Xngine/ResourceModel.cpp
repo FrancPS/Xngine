@@ -11,9 +11,14 @@
 ResourceModel::ResourceModel() {
 
 }
+
 ResourceModel::~ResourceModel() {
-	// remove elements from the lists //
-	//remove meshes created //
+	unsigned int i;
+	// destroy objects from mesh list
+	for (i = 0; i < modelMeshes.size(); i++)
+	{
+		delete modelMeshes[i];
+	}
 }
 
 
@@ -42,6 +47,7 @@ void ResourceModel::LoadMaterials(const aiScene* scene)
 	{
 		if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &file) == AI_SUCCESS)
 		{
+			// Populate materials list
 			modelMaterials.push_back(ResourceTexture::LoadTexture(file.data));
 		}
 	}
@@ -53,18 +59,13 @@ void ResourceModel::LoadMeshes(const aiScene* scene) {
 	for (unsigned int i = 0; i < scene->mNumMeshes; ++i)
 	{
 		// Populate meshes list
-		modelMeshes.push_back(ResourceMesh(scene->mMeshes[i]));
+		modelMeshes.push_back(new ResourceMesh(scene->mMeshes[i]));
 		numMeshes++;
 	}
 }
 
-void ResourceModel::LoadTextures(aiMaterial** _mMaterials, unsigned int _mNumMaterials)
-{
-
-}
-
 void ResourceModel::Draw() {
 	for (unsigned int i = 0; i < numMeshes; ++i) {
-		modelMeshes[i].Draw(modelMaterials);
+		modelMeshes[i]->Draw(modelMaterials);
 	}
 }

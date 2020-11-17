@@ -7,12 +7,11 @@
 class ResourceProgram
 {
 public:
-	// Module Functions
 	ResourceProgram();
 	~ResourceProgram();
 
-	static unsigned CompileShader(unsigned type, const char* source);
-	static char* LoadShaderSource(const char* shader_file_name);
-	static unsigned CreateProgram(unsigned vtx_shader, unsigned frg_shader);
+	static char*		LoadShaderSource(const char* shader_file_name);
+	static unsigned int	CompileShader(unsigned type, const char* source);
+	static unsigned	int CreateProgram(unsigned vtx_shader, unsigned frg_shader);
 };
 

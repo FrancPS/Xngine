@@ -9,6 +9,8 @@
 // C/C++ > Preprocessor _MBCS
 // Pq cal fer copypaste de imgui i no val nomes l'include? pq amb altres si q val¿
 // Calen els pragma comment de tots els dll?
+// LOG draw?
+// ModuleImput wheel = 0?
 
 
 enum main_states
@@ -48,8 +50,17 @@ int main(int argc, char ** argv)
 			}
 			else
 			{
-				state = MAIN_UPDATE;
-				LOG("Application Update --------------");
+				LOG("Application Start --------------");
+				if (App->Start() == false)
+				{
+					LOG("Application Start exits with error -----");
+					state = MAIN_EXIT;
+				}
+				else 
+				{
+					state = MAIN_UPDATE;
+					LOG("Application Update --------------");
+				}
 			}
 
 			break;
@@ -84,7 +95,6 @@ int main(int argc, char ** argv)
 			break;
 
 		}
-
 	}
 
 	delete App;

@@ -3,8 +3,6 @@
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
 #include "ModuleCamera.h"
-#include "ResourceModel.h"
-#include "ResourceProgram.h"
 #include "ModuleDebugDraw.h"
 #include "SDL.h"
 #include "GL/glew.h"
@@ -44,16 +42,12 @@ void __stdcall OurOpenGLErrorFunction(GLenum source, GLenum type, GLuint id, GLe
 	LOG("<Source:%s> <Type:%s> <Severity:%s> <ID:%d> <Message:%s>\n", tmp_source, tmp_type, tmp_severity, id, message);
 }
 
-ModuleRender::ModuleRender()
-{
-}
+ModuleRender::ModuleRender() {}
 
 // Destructor
-ModuleRender::~ModuleRender()
-{
-}
+ModuleRender::~ModuleRender() {}
 
-// Called before render is available
+#pragma region 	// ----------- Module Functions ---------- //
 bool ModuleRender::Init()
 {
 	LOG("Creating Renderer context");
@@ -79,17 +73,13 @@ bool ModuleRender::Init()
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 	glDebugMessageCallback(&OurOpenGLErrorFunction, nullptr);
 
-
 	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, true);
 # endif
 
-	bakerhouse.Load("BakerHouse.fbx");
+	bakerhouse.Load("BakerHouse.fbx"); //TODO make a general call for loading a texture (in input?)
 
 	return true;
 }
-
-// Module Start(){}
-
 
 update_status ModuleRender::PreUpdate()
 {
@@ -98,13 +88,14 @@ update_status ModuleRender::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-// Called every draw update
 update_status ModuleRender::Update()
 {
+	// Draw the grid and origin
 	int w, h;
 	SDL_GetWindowSize(App->window->window, &w, &h);
 	App->debug_draw->Draw(App->camera->GetViewMatrix(), App->camera->GetProjectionMatrix(), w, h);
-	//RenderTriangle();
+
+	// Draw the model
 	bakerhouse.Draw();
 	return UPDATE_CONTINUE;
 }
@@ -117,53 +108,20 @@ update_status ModuleRender::PostUpdate()
 	return UPDATE_CONTINUE;
 }
 
-// Called before quitting
 bool ModuleRender::CleanUp()
 {
-	// Destroy VBOs
-	DestroyVBO(vboTriangle);
 	LOG("Destroying renderer");
 	SDL_GL_DeleteContext(this->context);
 	return true;
 }
+#pragma endregion
 
-void ModuleRender::WindowResized(unsigned width, unsigned height)
+#pragma region // ------------ Module Render ------------ //
+void ModuleRender::OnWindowResized(unsigned width, unsigned height)
 {
 	glViewport(0, 0, width, height);
 	App->camera->SetFOV(width, height);
 }
-
-// This function must be called one time at creation of vertex buffer
-unsigned ModuleRender::CreateTriangleVBO()
-{
-	//float vtx_data[] = { -1.0f, -1.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f };
-	float buffer_data[] = { 
-		-1.0f, -1.0f, 0.0f, // v0 pos
-		1.0f, -1.0f, 0.0f, // v1 pos
-		1.0f, 1.0f, 0.0f, // v2 pos
-
-		-1.0f, -1.0f, 0.0f, // v0 pos
-		1.0f, 1.0f, 0.0f, // v2 pos
-		-1.0f, 1.0f, 0.0f, // v3 pos
-
-		0.0f, 0.0f, // v0 texcoord
-		1.0f, 0.0f, // v1 texcoord
-		1.0f, 1.0f, // v2 texcoord
-
-		0.0f, 0.0f, // v0 texcoord
-		1.0f, 1.0f, // v2 texcoord
-		0.0f, 1.0f
-	};
-	unsigned vbo;
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo); // set vbo active
-	glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data), buffer_data, GL_STATIC_DRAW);
-	return vbo;
-}
-// This function must be called one time at destruction of vertex buffer
-void ModuleRender::DestroyVBO(unsigned vbo)
-{
-	glDeleteBuffers(1, &vbo);
-}
+#pragma endregion
 
 

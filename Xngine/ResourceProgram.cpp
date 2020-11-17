@@ -14,7 +14,23 @@ ResourceProgram::~ResourceProgram()
 {
 }
 
-
+char* ResourceProgram::LoadShaderSource(const char* shader_file_name)
+{
+	char* data = nullptr;
+	FILE* file = nullptr;
+	fopen_s(&file, shader_file_name, "rb");
+	if (file)
+	{
+		fseek(file, 0, SEEK_END);
+		int size = ftell(file);
+		data = (char*)malloc(size + 1);
+		fseek(file, 0, SEEK_SET);
+		fread(data, 1, size, file);
+		data[size] = 0;
+		fclose(file);
+	}
+	return data;
+}
 
 unsigned ResourceProgram::CompileShader(unsigned type, const char* source)
 {
@@ -37,25 +53,6 @@ unsigned ResourceProgram::CompileShader(unsigned type, const char* source)
 		}
 	}
 	return shader_id;
-}
-
-
-char* ResourceProgram::LoadShaderSource(const char* shader_file_name)
-{
-	char* data = nullptr;
-	FILE* file = nullptr;
-	fopen_s(&file, shader_file_name, "rb");
-	if (file)
-	{
-		fseek(file, 0, SEEK_END);
-		int size = ftell(file);
-		data = (char*)malloc(size + 1);
-		fseek(file, 0, SEEK_SET);
-		fread(data, 1, size, file);
-		data[size] = 0;
-		fclose(file);
-	}
-	return data;
 }
 
 unsigned ResourceProgram::CreateProgram(unsigned vtx_shader, unsigned frg_shader)

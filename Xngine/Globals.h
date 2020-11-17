@@ -22,5 +22,5 @@ enum update_status
 #define FULLSCREEN false
 #define VSYNC true
 #define RESIZABLE true
-#define TITLE "Super Awesome Engine"
+#define TITLE "Xngine"
 #define DEGTORAD 3.14159/180

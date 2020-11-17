@@ -18,7 +18,7 @@ ModuleCamera::~ModuleCamera()
 {
 }
 
-// Called before render is available
+#pragma region // ----------- Module Functions ---------- //
 bool ModuleCamera::Init()
 {
 	LOG("Creating Camera context");
@@ -30,6 +30,7 @@ bool ModuleCamera::Init()
 	frustum.SetPos(float3(0, 1, -2));
 	frustum.SetFront(float3::unitZ);
 	frustum.SetUp(float3::unitY);
+
 	return true;
 }
 
@@ -41,9 +42,10 @@ update_status ModuleCamera::PreUpdate()
 
 update_status ModuleCamera::Update() 
 {
-	float deltaTime = (SDL_GetTicks() - mTicksCount) / 100.f;
+	float deltaTime = (SDL_GetTicks() - mTicksCount) / 100.f; // Get deltaTime of current frame
+
 	/// ---------------------- KEYS ---------------------- ///
-	// TRASLATION COMMANDS
+	// ---- TRANSLATION COMMANDS --- //
 	// W -- Move Forward
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && !(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)) {
 		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
@@ -72,7 +74,6 @@ update_status ModuleCamera::Update()
 		else
 			MoveRightAxis(-deltaTime);
 	}
-
 	// Q -- Move Unit Up
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
 		MoveYAxis(1);
@@ -82,7 +83,7 @@ update_status ModuleCamera::Update()
 		MoveYAxis(-1);
 	}
 
-	// ROTATION COMMANDS
+	// ----- ROTATION COMMANDS ----- //
 	// KeyUP -- Pitch ++
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && !(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)) {
 		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
@@ -120,34 +121,55 @@ update_status ModuleCamera::Update()
 
 	// RIGHT CLICK -- Rotation
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT) {
-		Yaw(App->input->GetMouseMotion().x*deltaTime/10);
-		Pitch(App->input->GetMouseMotion().y * deltaTime/10);
+		Yaw(App->input->GetMouseMotion().x * deltaTime);
+		Pitch(App->input->GetMouseMotion().y * deltaTime);
 	}
 
-	// Update tick counts (for next frame)
-	mTicksCount = SDL_GetTicks();
+	
+	mTicksCount = SDL_GetTicks();	// Update tick counts (deltaTime for next frame)
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleCamera::PostUpdate()
 {
 	//Send the frustum view matrix to OpenGL
-	projectionGL = frustum.ProjectionMatrix();
+	projectionMatrix = frustum.ProjectionMatrix();
 	viewMatrix = frustum.ViewMatrix();
 
 	return UPDATE_CONTINUE;
 }
 
-// Called before quitting
 bool ModuleCamera::CleanUp()
 {
 	LOG("Destroying camera");
-
+	
 	return true;
 }
+#pragma endregion 
 
-/* TRASLATION */
-#pragma region TRASLATIONS
+
+#pragma region // ---------- Getters & Setters ---------- //
+void ModuleCamera::SetFOV(unsigned width, unsigned height) {
+	float aspectRatio = width / height;
+	frustum.SetHorizontalFovAndAspectRatio(DEGTORAD * 90.0f, 1.3f * aspectRatio);
+}
+#pragma endregion 
+
+
+#pragma region // ------------ Module Camera ------------ //
+bool ModuleCamera::LookAt(int _x, int _y, int _z) {
+	float3x3	rotationMatrix = float3x3::LookAt(frustum.Front(), float3::float3(_x, _y, _z), frustum.Up(), float3::float3(0, 1, 0));
+	vec			oldFront		= frustum.Front().Normalized();
+	vec			oldUp			= frustum.Up().Normalized();
+
+	frustum.SetFront(rotationMatrix * oldFront);
+	frustum.SetUp(rotationMatrix * oldUp);
+	return true;
+}
+#pragma endregion
+
+
+#pragma region // ---------- Camera Traslations --------- //
 bool ModuleCamera::MoveFrontAxis(float _speed)
 {
 	float4x4 translationM = float4x4::identity;
@@ -171,17 +193,16 @@ bool ModuleCamera::MoveYAxis(int upOrDown) {
 
 	return true;
 }
-
 #pragma endregion
 
-/* ROTATION */
-#pragma region ROTATIONS
-bool ModuleCamera::Pitch(float _speed) {
-	float3x3 rotationMatrix = float3x3::RotateAxisAngle(frustum.WorldRight(), _speed);
-	vec newFront = rotationMatrix * frustum.Front().Normalized();
-	vec newUp = rotationMatrix * frustum.Up().Normalized();
 
-	if (newFront.AngleBetweenNorm(float3::float3(0, 1, 0)) > 0.1f && newFront.AngleBetweenNorm(float3::float3(0, -1, 0)) > 0.1f) {		// Limit angle from vertical to 0.1rad    /////////////////////////////////////////////WORLD UP???
+#pragma region // ----------- Camera Rotations ---------- //
+bool ModuleCamera::Pitch(float _speed) {
+	float3x3	rotationMatrix = float3x3::RotateAxisAngle(frustum.WorldRight(), _speed);
+	vec			newFront = rotationMatrix * frustum.Front().Normalized();
+	vec			newUp = rotationMatrix * frustum.Up().Normalized();
+
+	if (newFront.AngleBetweenNorm(float3::float3(0, 1, 0)) > 0.1f && newFront.AngleBetweenNorm(float3::float3(0, -1, 0)) > 0.1f) {	// Limit angle from vertical to 0.1rad //TODO bug: repeatedly rotating with the mouse bracks the condition!
 		frustum.SetFront(newFront);
 		frustum.SetUp(newUp);
 	}
@@ -189,33 +210,13 @@ bool ModuleCamera::Pitch(float _speed) {
 }
 
 bool ModuleCamera::Yaw(float _speed) {
-	float3x3 rotationMatrix = float3x3::RotateY(_speed); // Yaws in the absolute Y axis, its less disorienting
-	vec oldFront = frustum.Front().Normalized();
+	float3x3	rotationMatrix = float3x3::RotateY(_speed);
+	vec			oldFront = frustum.Front().Normalized();
+	vec			oldUp = frustum.Up().Normalized();
+
 	frustum.SetFront(rotationMatrix * oldFront);
-	vec oldUp = frustum.Up().Normalized();
 	frustum.SetUp(rotationMatrix * oldUp);
 	return true;
 }
 
 #pragma endregion
-
-
-bool ModuleCamera::LookAt(int _x, int _y, int _z) {
-	float3x3 rotationMatrix = float3x3::LookAt(frustum.Front(), float3::float3(_x,_y,_z), frustum.Up(), float3::float3(0, 1, 0));
-	vec oldFront = frustum.Front().Normalized();
-	frustum.SetFront(rotationMatrix * oldFront);
-	vec oldUp = frustum.Up().Normalized();
-	frustum.SetUp(rotationMatrix * oldUp);
-	return true;
-}
-
-bool ModuleCamera::SetPlaneDistances(float _zNear, float _zFar) {
-	frustum.SetViewPlaneDistances(_zNear, _zFar);
-	return true;
-}
-
-bool ModuleCamera::SetFOV(unsigned width, unsigned height) {
-	float aspectRatio = width / height;
-	frustum.SetHorizontalFovAndAspectRatio(DEGTORAD * 90.0f, 1.3f*aspectRatio);
-	return true;
-}

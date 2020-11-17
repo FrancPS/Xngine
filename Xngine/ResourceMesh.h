@@ -4,19 +4,9 @@
 #include "assimp/mesh.h"
 #include <vector>
 
-
-struct Vertex {
-	int x;
-	int y;
-	int z; //use vec3?
-	int uvX;
-	int uvY; // use vec2
-};
-
 class ResourceMesh
 {
 public:
-	//std::vector<Vertex> vertices;
 	unsigned int numVertex;
 
 	unsigned int materialIndex = 0;
@@ -29,9 +19,10 @@ public:
 private:
 	unsigned shaderProgram;
 
+
 public:
 	ResourceMesh(const aiMesh* mesh);
-
+	~ResourceMesh();
 	void Draw(const std::vector<unsigned int>& model_textures);
 
 private:

@@ -23,7 +23,7 @@ ModuleInput::ModuleInput()
 ModuleInput::~ModuleInput()
 {}
 
-// Called before render is available
+#pragma region // ----------- Module Functions ---------- //
 bool ModuleInput::Init()
 {
 	LOG("Init SDL input event system");
@@ -39,7 +39,6 @@ bool ModuleInput::Init()
 	return ret;
 }
 
-// Called each loop iteration
 update_status ModuleInput::PreUpdate()
 {
 	static SDL_Event event;
@@ -79,7 +78,8 @@ update_status ModuleInput::PreUpdate()
 	while (SDL_PollEvent(&event) != 0)
 	{
 		//Imgui events
-		ImGui_ImplSDL2_ProcessEvent(&event);
+		//TODO
+		//ImGui_ImplSDL2_ProcessEvent(&event); // Throws error when pressing SHIFT or CTRL
 		
 		switch (event.type)
 		{
@@ -105,7 +105,7 @@ update_status ModuleInput::PreUpdate()
 				windowEvents[WE_SHOW] = true;
 				break;
 			case SDL_WINDOWEVENT_SIZE_CHANGED:
-				App->renderer->WindowResized(event.window.data1, event.window.data2);
+				App->renderer->OnWindowResized(event.window.data1, event.window.data2);
 				break;
 			}
 			break;
@@ -138,18 +138,14 @@ update_status ModuleInput::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-// Called every draw update
 update_status ModuleInput::Update()
 {
-
-    //keyboard = SDL_GetKeyboardState(NULL);
-
     return UPDATE_CONTINUE;
 }
 
 update_status ModuleInput::PostUpdate()
 {
-	wheel = 0.0f;
+	wheel = 0.0f; // reset the value of the mouse wheel motion for the next frame TODO: can i avoid this assignation each frame?
 	return UPDATE_CONTINUE;
 }
 
@@ -160,24 +156,4 @@ bool ModuleInput::CleanUp()
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }
-
-
-bool ModuleInput::GetWindowEvent(EventWindow ev) const
-{
-	return windowEvents[ev];
-}
-
-const iPoint& ModuleInput::GetMousePosition() const
-{
-	return mouse;
-}
-
-const iPoint& ModuleInput::GetMouseMotion() const
-{
-	return mouse_motion;
-}
-
-const float& ModuleInput::GetMouseWheel() const
-{
-	return wheel;
-}
+#pragma endregion

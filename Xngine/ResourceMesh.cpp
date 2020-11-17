@@ -14,10 +14,16 @@ ResourceMesh::ResourceMesh(const aiMesh* _mesh){
 	LoadMeshEBO(_mesh);
 	CreateVAO();
 
-	// -- Create Program -- // THIS SHOULD NOT EXECUTE EVERY FRAME!!
-	unsigned vertexShader = ResourceProgram::CompileShader(GL_VERTEX_SHADER, ResourceProgram::LoadShaderSource("./Shaders/default_VertexShader.glsl"));
+	// Create Shader Program
+	unsigned vertexShader	= ResourceProgram::CompileShader(GL_VERTEX_SHADER, ResourceProgram::LoadShaderSource("./Shaders/default_VertexShader.glsl"));
 	unsigned fragmentShader = ResourceProgram::CompileShader(GL_FRAGMENT_SHADER, ResourceProgram::LoadShaderSource("./Shaders/default_FragmentShader.glsl"));
 	shaderProgram = ResourceProgram::CreateProgram(vertexShader, fragmentShader);
+}
+
+ResourceMesh::~ResourceMesh() {
+	glDeleteBuffers(1, &vao);
+	glDeleteBuffers(1, &ebo);
+	glDeleteBuffers(1, &vbo);
 }
 
 
@@ -37,16 +43,6 @@ void ResourceMesh::LoadMeshVBO(const aiMesh* mesh) {
 
 	// copied as interleaved array. Good for static meshes!
 	for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
-		/*// Position
-		vertices[i].x = mesh->mVertices[i].x;
-		vertices[i].z = mesh->mVertices[i].y;
-		vertices[i].x = mesh->mVertices[i].z;
-		// Normals
-		// ...
-		// UV
-		vertices[i].uvX = mesh->mTextureCoords[0][i].x;
-		vertices[i].uvY = mesh->mTextureCoords[0][i].y;*/
-
 		// load info into vbo
 		vertexData[pos++] = mesh->mVertices[i].x;
 		vertexData[pos++] = mesh->mVertices[i].y;

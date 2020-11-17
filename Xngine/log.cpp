@@ -30,11 +30,9 @@ void log(const char file[], int line, const char* format, ...)
 	if (imguiInitialised) {
 		Draw("CONSOLE");
 	}
-
-
 }
 
-void Draw(const char* title, bool* p_opened) // this should go inside the log function, but main logs give error
+void Draw(const char* title, bool* p_opened) // TODO: this should go inside the log function, but main logs give error
 {
 	ImGui::Begin(title, p_opened);
 	for (unsigned int i = 0; i < Buf.size(); ++i)

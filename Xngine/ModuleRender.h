@@ -9,32 +9,27 @@ struct SDL_Rect;
 
 class ModuleRender : public Module
 {
+
+private:
+	void* context;
+	ResourceModel bakerhouse;
+
 public:
+
 	ModuleRender();
 	~ModuleRender();
 
+	// ----------- Module Functions ---------- //
 	bool Init();
 	update_status PreUpdate();
 	update_status Update();
 	update_status PostUpdate();
 	bool CleanUp();
-	void WindowResized(unsigned width, unsigned height);
 
-	unsigned CreateTriangleVBO();
-	void DestroyVBO(unsigned vbo);
-	void* GetContext() const { return this->context; }
+	// ---------- Getters & Setters ---------- //
+	void* GetContext() const		{ return this->context; }
 	void SetContext(void* _context) { this->context = _context; }
 
-	ResourceModel bakerhouse;
-
-private:
-	void* context;
-	//unsigned int VBO;
-	unsigned vboTriangle;
-	unsigned programTriangle;
-
-private:
-	void RenderTriangle();
-	
-	
+	// ------------ Module Render ------------ //
+	void OnWindowResized(unsigned width, unsigned height);
 };

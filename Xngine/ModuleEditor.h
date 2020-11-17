@@ -9,10 +9,11 @@ class ModuleEditor : public Module
 
 
 public:
-	// Module Functions
+
 	ModuleEditor();
 	~ModuleEditor();
 
+	// ----------- Module Functions ---------- //
 	bool Init();
 	update_status PreUpdate();
 	update_status Update();
