@@ -2,8 +2,8 @@
 #include "Application.h"
 #include "ModuleCamera.h"
 #include "ModuleInput.h"
-#include "MathGeoLib-master/Geometry/Frustum.h"
-#include "MathGeoLib-master/Math/float3x3.h"
+#include "Geometry/Frustum.h"
+#include "Math/float3x3.h"
 #include "SDL.h"
 #include "GL/glew.h"
 

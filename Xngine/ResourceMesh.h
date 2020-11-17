@@ -26,6 +26,9 @@ public:
 	unsigned int ebo;
 	unsigned int vao;
 
+private:
+	unsigned shaderProgram;
+
 public:
 	ResourceMesh(const aiMesh* mesh);
 

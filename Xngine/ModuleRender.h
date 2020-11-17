@@ -33,10 +33,6 @@ private:
 	unsigned vboTriangle;
 	unsigned programTriangle;
 
-
-	
-
-
 private:
 	void RenderTriangle();
 	

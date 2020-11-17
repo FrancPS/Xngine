@@ -1,13 +1,15 @@
 #include <stdlib.h>
 #include "Application.h"
 #include "Globals.h"
+#include "SDL.h"
 
-#include "SDL/include/SDL.h"
-#pragma comment( lib, "SDL/lib/x86/SDL2.lib" )
-#pragma comment( lib, "SDL/lib/x86/SDL2main.lib" )
-#pragma comment( lib, "DevIL/lib/x86/Release/DevIL.lib")
-#pragma comment( lib, "DevIL/lib/x86/Release/ILU.lib")
-#pragma comment( lib, "DevIL/lib/x86/Release/ILUT.lib")
+
+//Dubtes MARC: ---------
+// Pq Point.h no funciona?
+// C/C++ > Preprocessor _MBCS
+// Pq cal fer copypaste de imgui i no val nomes l'include? pq amb altres si q val¿
+// Calen els pragma comment de tots els dll?
+
 
 enum main_states
 {

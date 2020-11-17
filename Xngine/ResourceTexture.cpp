@@ -25,7 +25,6 @@ unsigned int ResourceTexture::LoadTexture(const char* file_path)
 	ilEnable(IL_ORIGIN_SET);
 	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
 
-
 	unsigned int texture, imageID;
 
 	ilGenImages(1, &imageID); /* Generation of one image name */

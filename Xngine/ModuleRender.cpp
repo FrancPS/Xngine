@@ -5,10 +5,10 @@
 #include "ModuleCamera.h"
 #include "ResourceModel.h"
 #include "ResourceProgram.h"
-#include "debug-draw/ModuleDebugDraw.h"
+#include "ModuleDebugDraw.h"
 #include "SDL.h"
 #include "GL/glew.h"
-#include "MathGeoLib-master/Geometry/Frustum.h"
+#include "Geometry/Frustum.h"
 #include "imgui.h"
 #include "backends/imgui_impl_sdl.h"
 #include "backends/imgui_impl_opengl3.h"
@@ -78,14 +78,10 @@ bool ModuleRender::Init()
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 	glDebugMessageCallback(&OurOpenGLErrorFunction, nullptr);
+
+
 	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, true);
 # endif
-
-	// -- Create Triangle Program -- //
-	/*unsigned vertexTriangle = App->program->CompileShader(GL_VERTEX_SHADER, App->program->LoadShaderSource("../Shaders/default_VertexShader.glsl"));
-	unsigned fragmentTriangle = App->program->CompileShader(GL_FRAGMENT_SHADER, App->program->LoadShaderSource("../Shaders/default_FragmentShader.glsl"));
-
-	programTriangle = App->program->CreateProgram(vertexTriangle, fragmentTriangle);*/
 
 	bakerhouse.Load("BakerHouse.fbx");
 

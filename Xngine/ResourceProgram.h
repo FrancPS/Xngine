@@ -2,7 +2,7 @@
 
 #include "Module.h"
 #include "Globals.h"
-#include "MathGeoLib-master/Geometry/Frustum.h"
+#include "Geometry/Frustum.h"
 
 class ResourceProgram
 {

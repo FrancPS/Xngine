@@ -4,7 +4,7 @@
 #include "ResourceProgram.h"
 #include "ModuleCamera.h"
 #include "GL/glew.h"
-#include "MathGeoLib-master/Math/float4x4.h"
+#include "Math/float4x4.h"
 
 
 
@@ -13,6 +13,11 @@ ResourceMesh::ResourceMesh(const aiMesh* _mesh){
 	LoadMeshVBO(_mesh);
 	LoadMeshEBO(_mesh);
 	CreateVAO();
+
+	// -- Create Program -- // THIS SHOULD NOT EXECUTE EVERY FRAME!!
+	unsigned vertexShader = ResourceProgram::CompileShader(GL_VERTEX_SHADER, ResourceProgram::LoadShaderSource("./Shaders/default_VertexShader.glsl"));
+	unsigned fragmentShader = ResourceProgram::CompileShader(GL_FRAGMENT_SHADER, ResourceProgram::LoadShaderSource("./Shaders/default_FragmentShader.glsl"));
+	shaderProgram = ResourceProgram::CreateProgram(vertexShader, fragmentShader);
 }
 
 
@@ -87,21 +92,16 @@ void ResourceMesh::CreateVAO()
 
 void ResourceMesh::Draw(const std::vector<unsigned int>& model_textures)
 {
-	// -- Create Program -- // THIS SHOULD NOT EXECUTE EVERY FRAME!!
-	unsigned vertexTriangle = ResourceProgram::CompileShader(GL_VERTEX_SHADER, ResourceProgram::LoadShaderSource("../Shaders/default_VertexShader.glsl"));
-	unsigned fragmentTriangle = ResourceProgram::CompileShader(GL_FRAGMENT_SHADER, ResourceProgram::LoadShaderSource("../Shaders/default_FragmentShader.glsl"));
-	unsigned program = ResourceProgram::CreateProgram(vertexTriangle, fragmentTriangle); 
-
 	const float4x4& view = App->camera->GetViewMatrix();
 	const float4x4& proj = App->camera->GetProjectionMatrix();
 	float4x4 model = float4x4::identity;
-	glUseProgram(program);
-	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_TRUE, (const float*)&model);
-	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_TRUE, (const float*)&view);
-	glUniformMatrix4fv(glGetUniformLocation(program, "proj"), 1, GL_TRUE, (const float*)&proj);
+	glUseProgram(shaderProgram);
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_TRUE, (const float*)&model);
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_TRUE, (const float*)&view);
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "proj"), 1, GL_TRUE, (const float*)&proj);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, model_textures[materialIndex]);
-	glUniform1i(glGetUniformLocation(program, "diffuse"), 0);
+	glUniform1i(glGetUniformLocation(shaderProgram, "diffuse"), 0);
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_INT, nullptr);
 	glBindVertexArray(0);
