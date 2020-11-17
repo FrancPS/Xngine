@@ -1,35 +1,22 @@
 
 #include "Globals.h"
 #include "Application.h"
-#include "ModuleProgram.h"
+#include "ResourceProgram.h"
 #include "SDL.h"
 #include "GL/glew.h"
-#include "MathGeoLib-master/Geometry/Frustum.h"
 
-ModuleProgram::ModuleProgram()
+ResourceProgram::ResourceProgram()
 {
 }
 
 // Destructor
-ModuleProgram::~ModuleProgram()
+ResourceProgram::~ResourceProgram()
 {
 }
 
 
-bool ModuleProgram::Init() {
-	return true;
-}
 
-update_status ModuleProgram::PreUpdate() { return UPDATE_CONTINUE; }
-update_status ModuleProgram::Update() { return UPDATE_CONTINUE; }
-update_status ModuleProgram::PostUpdate() { return UPDATE_CONTINUE; }
-
-bool ModuleProgram::CleanUp() {
-	return true;
-}
-
-
-unsigned ModuleProgram::CompileShader(unsigned type, const char* source)
+unsigned ResourceProgram::CompileShader(unsigned type, const char* source)
 {
 	unsigned shader_id = glCreateShader(type);
 	glShaderSource(shader_id, 1, &source, 0);
@@ -53,7 +40,7 @@ unsigned ModuleProgram::CompileShader(unsigned type, const char* source)
 }
 
 
-char* ModuleProgram::LoadShaderSource(const char* shader_file_name)
+char* ResourceProgram::LoadShaderSource(const char* shader_file_name)
 {
 	char* data = nullptr;
 	FILE* file = nullptr;
@@ -71,7 +58,7 @@ char* ModuleProgram::LoadShaderSource(const char* shader_file_name)
 	return data;
 }
 
-unsigned ModuleProgram::CreateProgram(unsigned vtx_shader, unsigned frg_shader)
+unsigned ResourceProgram::CreateProgram(unsigned vtx_shader, unsigned frg_shader)
 {
 	unsigned program_id = glCreateProgram();
 	glAttachShader(program_id, vtx_shader);

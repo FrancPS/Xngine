@@ -1,22 +1,23 @@
-#include "ModuleTexture.h"
+#include "ResourceTexture.h"
 #include "IL/il.h"
 #include "IL/ilut.h"
 #include "SDL.h"
 
-ModuleTexture::ModuleTexture() {}
-
-ModuleTexture::~ModuleTexture()
-{
-	ilShutDown();
+ResourceTexture::ResourceTexture() {
+	
 }
 
-bool ModuleTexture::Init() {
+ResourceTexture::~ResourceTexture()
+{
+	
+}
 
+unsigned int ResourceTexture::LoadTexture(const char* file_path) 
+{
 	LOG("Initialising DevIL context");
 
 	if (ilGetInteger(IL_VERSION_NUM) < IL_VERSION) {
 		LOG("ERROR: WRONG DevIL version");
-		return false;
 	}
 	ilInit();
 	iluInit();
@@ -24,12 +25,7 @@ bool ModuleTexture::Init() {
 	ilEnable(IL_ORIGIN_SET);
 	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
 
-	//LoadTexture("Lenna.png");
-	return true;
-}
 
-
-unsigned int ModuleTexture::LoadTexture(const char* file_path) {
 	unsigned int texture, imageID;
 
 	ilGenImages(1, &imageID); /* Generation of one image name */
@@ -55,5 +51,8 @@ unsigned int ModuleTexture::LoadTexture(const char* file_path) {
 		return false;
 	}
 	ilDeleteImages(1, &imageID); /* Because we have already copied image data into texture data we can release memory used by image. */
+
+	ilShutDown();
+
 	return texture;
 }

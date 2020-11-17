@@ -1,6 +1,6 @@
 #pragma once
 #include "Module.h"
-#include "Model.h"
+#include "ResourceModel.h"
 #include "Globals.h"
 
 struct SDL_Texture;
@@ -25,7 +25,7 @@ public:
 	void* GetContext() const { return this->context; }
 	void SetContext(void* _context) { this->context = _context; }
 
-	Model bakerhouse;
+	ResourceModel bakerhouse;
 
 private:
 	void* context;

@@ -1,17 +1,17 @@
 #pragma once
 #include "Globals.h"
-#include "Mesh.h"
+#include "ResourceMesh.h"
 #include "assimp/scene.h"
 #include <vector>
 
-class Model
+class ResourceModel
 {
 public:
 
-	Model();
-	~Model();
+	ResourceModel();
+	~ResourceModel();
 
-	std::vector<Mesh> GetMeshes() const { return modelMeshes; }
+	std::vector<ResourceMesh> GetMeshes() const { return modelMeshes; }
 	std::vector<unsigned int> GetTextures() const { return modelMaterials; }
 
 	void Load(const char* file_name);
@@ -23,7 +23,7 @@ private:
 	void LoadMaterials(const aiScene* scene);
 
 private:
-	std::vector<Mesh> modelMeshes;
+	std::vector<ResourceMesh> modelMeshes;
 	unsigned int numMeshes = 0;
 	std::vector<unsigned int> modelMaterials;
 };

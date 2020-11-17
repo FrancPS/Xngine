@@ -227,15 +227,15 @@
     <ClInclude Include="MathGeoLib-master\Math\TransformOps.h" />
     <ClInclude Include="MathGeoLib-master\Math\vec2d.h" />
     <ClInclude Include="MathGeoLib-master\Time\Clock.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Model.h" />
+    <ClInclude Include="ResourceMesh.h" />
+    <ClInclude Include="ResourceModel.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleCamera.h" />
     <ClInclude Include="ModuleEditor.h" />
     <ClInclude Include="ModuleInput.h" />
-    <ClInclude Include="ModuleProgram.h" />
+    <ClInclude Include="ResourceProgram.h" />
     <ClInclude Include="ModuleRender.h" />
-    <ClInclude Include="ModuleTexture.h" />
+    <ClInclude Include="ResourceTexture.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="Point.h" />
   </ItemGroup>
@@ -292,14 +292,14 @@
     <ClCompile Include="MathGeoLib-master\Math\SSEMath.cpp" />
     <ClCompile Include="MathGeoLib-master\Math\TransformOps.cpp" />
     <ClCompile Include="MathGeoLib-master\Time\Clock.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="ResourceMesh.cpp" />
+    <ClCompile Include="ResourceModel.cpp" />
     <ClCompile Include="ModuleCamera.cpp" />
     <ClCompile Include="ModuleEditor.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
-    <ClCompile Include="ModuleProgram.cpp" />
+    <ClCompile Include="ResourceProgram.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
-    <ClCompile Include="ModuleTexture.cpp" />
+    <ClCompile Include="ResourceTexture.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
   </ItemGroup>
   <ItemGroup>

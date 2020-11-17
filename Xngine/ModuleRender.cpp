@@ -2,10 +2,9 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
-#include "ModuleProgram.h"
 #include "ModuleCamera.h"
-#include "ModuleTexture.h"
-#include "Model.h"
+#include "ResourceModel.h"
+#include "ResourceProgram.h"
 #include "debug-draw/ModuleDebugDraw.h"
 #include "SDL.h"
 #include "GL/glew.h"
@@ -83,12 +82,10 @@ bool ModuleRender::Init()
 # endif
 
 	// -- Create Triangle Program -- //
-	unsigned vertexTriangle = App->program->CompileShader(GL_VERTEX_SHADER, App->program->LoadShaderSource("../Shaders/default_VertexShader.glsl"));
+	/*unsigned vertexTriangle = App->program->CompileShader(GL_VERTEX_SHADER, App->program->LoadShaderSource("../Shaders/default_VertexShader.glsl"));
 	unsigned fragmentTriangle = App->program->CompileShader(GL_FRAGMENT_SHADER, App->program->LoadShaderSource("../Shaders/default_FragmentShader.glsl"));
 
-	programTriangle = App->program->CreateProgram(vertexTriangle, fragmentTriangle);
-
-	vboTriangle = CreateTriangleVBO();
+	programTriangle = App->program->CreateProgram(vertexTriangle, fragmentTriangle);*/
 
 	bakerhouse.Load("BakerHouse.fbx");
 
@@ -173,30 +170,4 @@ void ModuleRender::DestroyVBO(unsigned vbo)
 	glDeleteBuffers(1, &vbo);
 }
 
-void ModuleRender::RenderTriangle()
-{
-	glBindBuffer(GL_ARRAY_BUFFER, vboTriangle);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-	
-	float4x4 projection = App->camera->GetProjectionMatrix();
-	float4x4 model = float4x4::FromTRS(float3(0.0f, 1.0f, 2.0f), float4x4::RotateZ(pi), float3(1.0f, 1.0f, 0.0f));
-	float4x4 view = App->camera->GetViewMatrix();
-
-	glUseProgram(programTriangle);
-
-	glUniformMatrix4fv(glGetUniformLocation(programTriangle, "model"), 1, GL_TRUE, &model[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(programTriangle, "view"), 1, GL_TRUE, &view[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(programTriangle, "proj"), 1, GL_TRUE, &projection[0][0]);
-
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 6 * 3));
-	
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, App->textures->LoadTexture("Lenna.png")); /* Binding of texture name */ /*im loading the texture each frame! */
-	glUniform1i(glGetUniformLocation(programTriangle, "mytexture"), 0);
-
-	// 1 triangle to draw = 3 vertices
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-}
 

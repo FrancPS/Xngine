@@ -13,7 +13,7 @@ struct Vertex {
 	int uvY; // use vec2
 };
 
-class Mesh
+class ResourceMesh
 {
 public:
 	//std::vector<Vertex> vertices;
@@ -27,7 +27,7 @@ public:
 	unsigned int vao;
 
 public:
-	Mesh (const aiMesh* mesh);
+	ResourceMesh(const aiMesh* mesh);
 
 	void Draw(const std::vector<unsigned int>& model_textures);
 

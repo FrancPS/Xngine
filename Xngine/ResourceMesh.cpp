@@ -1,7 +1,7 @@
 #include "Application.h"
-#include "Mesh.h"
+#include "ResourceMesh.h"
 #include "Globals.h"
-#include "ModuleProgram.h"
+#include "ResourceProgram.h"
 #include "ModuleCamera.h"
 #include "GL/glew.h"
 #include "MathGeoLib-master/Math/float4x4.h"
@@ -9,14 +9,14 @@
 
 
 
-Mesh::Mesh(const aiMesh* _mesh){
+ResourceMesh::ResourceMesh(const aiMesh* _mesh){
 	LoadMeshVBO(_mesh);
 	LoadMeshEBO(_mesh);
 	CreateVAO();
 }
 
 
-void Mesh::LoadMeshVBO(const aiMesh* mesh) {
+void ResourceMesh::LoadMeshVBO(const aiMesh* mesh) {
 	materialIndex = mesh->mMaterialIndex;
 	numVertex = mesh->mNumVertices;
 
@@ -53,7 +53,7 @@ void Mesh::LoadMeshVBO(const aiMesh* mesh) {
 	glUnmapBuffer(GL_ARRAY_BUFFER);
 }
 
-void Mesh::LoadMeshEBO(const aiMesh* mesh) {
+void ResourceMesh::LoadMeshEBO(const aiMesh* mesh) {
 	numIndices = mesh->mNumFaces * 3;
 	glGenBuffers(1, &ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
@@ -72,7 +72,7 @@ void Mesh::LoadMeshEBO(const aiMesh* mesh) {
 	glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
 }
 
-void Mesh::CreateVAO()
+void ResourceMesh::CreateVAO()
 {
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -85,12 +85,12 @@ void Mesh::CreateVAO()
 	glBindVertexArray(0);
 }
 
-void Mesh::Draw(const std::vector<unsigned int>& model_textures)
+void ResourceMesh::Draw(const std::vector<unsigned int>& model_textures)
 {
-	// -- Create Triangle Program -- //
-	unsigned vertexTriangle = App->program->CompileShader(GL_VERTEX_SHADER, App->program->LoadShaderSource("../Shaders/default_VertexShader.glsl"));
-	unsigned fragmentTriangle = App->program->CompileShader(GL_FRAGMENT_SHADER, App->program->LoadShaderSource("../Shaders/default_FragmentShader.glsl"));
-	unsigned program = App->program->CreateProgram(vertexTriangle, fragmentTriangle);
+	// -- Create Program -- // THIS SHOULD NOT EXECUTE EVERY FRAME!!
+	unsigned vertexTriangle = ResourceProgram::CompileShader(GL_VERTEX_SHADER, ResourceProgram::LoadShaderSource("../Shaders/default_VertexShader.glsl"));
+	unsigned fragmentTriangle = ResourceProgram::CompileShader(GL_FRAGMENT_SHADER, ResourceProgram::LoadShaderSource("../Shaders/default_FragmentShader.glsl"));
+	unsigned program = ResourceProgram::CreateProgram(vertexTriangle, fragmentTriangle); 
 
 	const float4x4& view = App->camera->GetViewMatrix();
 	const float4x4& proj = App->camera->GetProjectionMatrix();

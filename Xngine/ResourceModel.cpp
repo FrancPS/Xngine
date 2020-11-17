@@ -1,23 +1,23 @@
 #include "Globals.h"
 #include "Application.h"
-#include "Model.h"
-#include "ModuleTexture.h"
-#include "Mesh.h"
+#include "ResourceModel.h"
+#include "ResourceTexture.h"
+#include "ResourceMesh.h"
 #include "assimp/scene.h"
 #include "assimp/cimport.h"
 #include "assimp/postprocess.h"
 
 
-Model::Model() {
+ResourceModel::ResourceModel() {
 
 }
-Model::~Model() {
+ResourceModel::~ResourceModel() {
 	// remove elements from the lists //
 	//remove meshes created //
 }
 
 
-void Model::Load(const char* file_name)
+void ResourceModel::Load(const char* file_name)
 {
 	const aiScene* scene;
 	scene = aiImportFile(file_name, aiProcessPreset_TargetRealtime_MaxQuality);
@@ -34,7 +34,7 @@ void Model::Load(const char* file_name)
 	}
 }
 
-void Model::LoadMaterials(const aiScene* scene)
+void ResourceModel::LoadMaterials(const aiScene* scene)
 {
 	aiString file;
 	modelMaterials.reserve(scene->mNumMaterials);
@@ -42,28 +42,28 @@ void Model::LoadMaterials(const aiScene* scene)
 	{
 		if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &file) == AI_SUCCESS)
 		{
-			modelMaterials.push_back(App->textures->LoadTexture(file.data));
+			modelMaterials.push_back(ResourceTexture::LoadTexture(file.data));
 		}
 	}
 }
 
-void Model::LoadMeshes(const aiScene* scene) {
+void ResourceModel::LoadMeshes(const aiScene* scene) {
 	aiString file;
 	modelMeshes.reserve(scene->mNumMeshes);
 	for (unsigned int i = 0; i < scene->mNumMeshes; ++i)
 	{
 		// Populate meshes list
-		modelMeshes.push_back(Mesh(scene->mMeshes[i]));
+		modelMeshes.push_back(ResourceMesh(scene->mMeshes[i]));
 		numMeshes++;
 	}
 }
 
-void Model::LoadTextures(aiMaterial** _mMaterials, unsigned int _mNumMaterials) 
+void ResourceModel::LoadTextures(aiMaterial** _mMaterials, unsigned int _mNumMaterials)
 {
 
 }
 
-void Model::Draw() {
+void ResourceModel::Draw() {
 	for (unsigned int i = 0; i < numMeshes; ++i) {
 		modelMeshes[i].Draw(modelMaterials);
 	}

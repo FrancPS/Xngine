@@ -134,7 +134,6 @@
       <Filter>MatGeoLib\Time</Filter>
     </ClCompile>
     <ClCompile Include="ModuleCamera.cpp" />
-    <ClCompile Include="ModuleProgram.cpp" />
     <ClCompile Include="ModuleEditor.cpp" />
     <ClCompile Include="imgui-docking\backends\imgui_impl_opengl3.cpp">
       <Filter>imgui</Filter>
@@ -157,9 +156,10 @@
     <ClCompile Include="debug-draw\ModuleDebugDraw.cpp">
       <Filter>debug-draw</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleTexture.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="ResourceMesh.cpp" />
+    <ClCompile Include="ResourceModel.cpp" />
+    <ClCompile Include="ResourceTexture.cpp" />
+    <ClCompile Include="ResourceProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -398,7 +398,6 @@
     </ClInclude>
     <ClInclude Include="ModuleCamera.h" />
     <ClInclude Include="Point.h" />
-    <ClInclude Include="ModuleProgram.h" />
     <ClInclude Include="ModuleEditor.h" />
     <ClInclude Include="imgui-docking\backends\imgui_impl_opengl3.h">
       <Filter>imgui</Filter>
@@ -433,9 +432,10 @@
     <ClInclude Include="debug-draw\debug_draw.hpp">
       <Filter>debug-draw</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleTexture.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="ResourceMesh.h" />
+    <ClInclude Include="ResourceModel.h" />
+    <ClInclude Include="ResourceTexture.h" />
+    <ClInclude Include="ResourceProgram.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MatGeoLib">
