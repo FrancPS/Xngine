@@ -36,10 +36,10 @@ update_status ModuleEditor::PreUpdate() {
 
 update_status ModuleEditor::Update() {
 	
-	//ImGui::ShowDemoWindow();
+	ImGui::ShowDemoWindow();
 
 	//DRAWLOG("CONSOLE");	// Print logs to App console // !!! IT is creating the window every frame, even if no logs are sent (putting DRAWLOG inside LOG : errors when LOGs are called in main.cpp)
-	//DrawMenu();
+	DrawMenu();
 
 	ImGui::Render();
 
@@ -62,6 +62,9 @@ bool ModuleEditor::CleanUp() {
 
 
 void ModuleEditor::DrawMenu() {
+	ImGui::Begin("MENU");
+	
+	ImGui::End();
 	/*ImGui::Begin("MENU");
 	
 	if (ImGui::BeginMenuBar())

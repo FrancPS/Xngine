@@ -1,13 +1,12 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
-#include "ModuleRender.h"
+#include "ModuleRender.h" // TODO Broadcast event to window resize
 #include "imgui.h"
+#include "imgui_internal.h"
 #include "SDL.h"
 #include "backends/imgui_impl_sdl.h"
 #include "backends/imgui_impl_opengl3.h"
-
-#include "ModuleCamera.h"//remove
 
 #define MAX_KEYS 300
 
@@ -19,7 +18,6 @@ ModuleInput::ModuleInput()
 	wheel = 0;
 }
 
-// Destructor
 ModuleInput::~ModuleInput()
 {}
 
@@ -43,44 +41,55 @@ update_status ModuleInput::PreUpdate()
 {
 	static SDL_Event event;
 
-	mouse_motion = { 0, 0 };
+	mouse_motion = { 0, 0 };	// reset the value of the mouse motions for this frame
+	wheel = 0.0f;
 	memset(windowEvents, false, WE_COUNT * sizeof(bool));
+	ImGuiIO& io = ImGui::GetIO();
+	bool imguiHasInputs = io.WantCaptureMouse || io.WantCaptureKeyboard;
 
-	const Uint8* keys = SDL_GetKeyboardState(NULL);
-
-	for (int i = 0; i < MAX_KEYS; ++i)
+	// ----- KEYBOARD ----- //
+	if (!imguiHasInputs)
 	{
-		if (keys[i] == 1)
+		const Uint8* keys = SDL_GetKeyboardState(NULL);
+		LOG("KEYS");
+		for (int i = 0; i < MAX_KEYS; ++i)
 		{
-			if (keyboard[i] == KEY_IDLE)
-				keyboard[i] = KEY_DOWN;
+			if (keys[i] == 1)
+			{
+				if (keyboard[i] == KEY_IDLE)
+					keyboard[i] = KEY_DOWN;
+				else
+					keyboard[i] = KEY_REPEAT;
+			}
 			else
-				keyboard[i] = KEY_REPEAT;
+			{
+				if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+					keyboard[i] = KEY_UP;
+				else
+					keyboard[i] = KEY_IDLE;
+			}
 		}
-		else
+
+		for (int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
 		{
-			if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
-				keyboard[i] = KEY_UP;
-			else
-				keyboard[i] = KEY_IDLE;
+			if (mouse_buttons[i] == KEY_DOWN)
+				mouse_buttons[i] = KEY_REPEAT;
+
+			if (mouse_buttons[i] == KEY_UP)
+				mouse_buttons[i] = KEY_IDLE;
 		}
 	}
 
-	for (int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
-	{
-		if (mouse_buttons[i] == KEY_DOWN)
-			mouse_buttons[i] = KEY_REPEAT;
 
-		if (mouse_buttons[i] == KEY_UP)
-			mouse_buttons[i] = KEY_IDLE;
-	}
-
+	// ----- MOUSE AND WINDOW ----- //
 	while (SDL_PollEvent(&event) != 0)
 	{
-		//Imgui events
-		//TODO
-		//ImGui_ImplSDL2_ProcessEvent(&event); // Throws error when pressing SHIFT or CTRL
-		
+		// Hardcoded Imgui events
+		if (imguiHasInputs) {
+			ImGui_ImplSDL2_ProcessEvent(&event); // TODO: Throws error when pressing SHIFT or CTRL
+			return UPDATE_CONTINUE;
+		}
+
 		switch (event.type)
 		{
 		case SDL_QUIT:
@@ -129,7 +138,6 @@ update_status ModuleInput::PreUpdate()
 			wheel = (float)event.wheel.y;
 			break;
 		}
-
 	}
 
 	if (GetWindowEvent(EventWindow::WE_QUIT) == true || GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -145,7 +153,6 @@ update_status ModuleInput::Update()
 
 update_status ModuleInput::PostUpdate()
 {
-	wheel = 0.0f; // reset the value of the mouse wheel motion for the next frame TODO: can i avoid this assignation each frame?
 	return UPDATE_CONTINUE;
 }
 
