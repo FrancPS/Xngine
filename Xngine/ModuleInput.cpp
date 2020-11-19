@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h" // TODO Broadcast event to window resize
+#include "Event.h"
 #include "imgui.h"
 #include "imgui_internal.h"
 #include "SDL.h"
@@ -51,7 +52,6 @@ update_status ModuleInput::PreUpdate()
 	if (!imguiHasInputs)
 	{
 		const Uint8* keys = SDL_GetKeyboardState(NULL);
-		LOG("KEYS");
 		for (int i = 0; i < MAX_KEYS; ++i)
 		{
 			if (keys[i] == 1)
@@ -86,7 +86,7 @@ update_status ModuleInput::PreUpdate()
 	{
 		// Hardcoded Imgui events
 		if (imguiHasInputs) {
-			ImGui_ImplSDL2_ProcessEvent(&event); // TODO: Throws error when pressing SHIFT or CTRL
+			ImGui_ImplSDL2_ProcessEvent(&event);
 			return UPDATE_CONTINUE;
 		}
 
@@ -113,8 +113,12 @@ update_status ModuleInput::PreUpdate()
 			case SDL_WINDOWEVENT_RESTORED:
 				windowEvents[WE_SHOW] = true;
 				break;
+			case SDL_WINDOWEVENT_RESIZED:
 			case SDL_WINDOWEVENT_SIZE_CHANGED:
-				App->renderer->OnWindowResized(event.window.data1, event.window.data2);
+				Event ev(Event::window_resize);
+				ev.point2d.x = event.window.data1;
+				ev.point2d.y = event.window.data2;
+				App->BroadcastEvent(ev);
 				break;
 			}
 			break;
@@ -136,6 +140,12 @@ update_status ModuleInput::PreUpdate()
 
 		case SDL_MOUSEWHEEL:
 			wheel = (float)event.wheel.y;
+			break;
+		case SDL_DROPFILE:      // In case if dropped file
+			Event ev(Event::file_dropped);
+			ev.string.ptr = event.drop.file;
+			App->BroadcastEvent(ev);
+			SDL_free(event.drop.file);
 			break;
 		}
 	}

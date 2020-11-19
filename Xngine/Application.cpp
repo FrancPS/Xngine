@@ -15,8 +15,9 @@ Application::Application()
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(debug_draw = new ModuleDebugDraw());
-	modules.push_back(editor = new ModuleEditor());
+	
 	modules.push_back(input = new ModuleInput());
+	modules.push_back(editor = new ModuleEditor());
 	modules.push_back(camera = new ModuleCamera());
 }
 
@@ -72,4 +73,10 @@ bool Application::CleanUp()
 		ret = (*it)->CleanUp();
 
 	return ret;
+}
+
+void Application::BroadcastEvent(const Event& event)
+{
+	for (list<Module*>::iterator it = modules.begin(); it != modules.end(); ++it)
+		(*it)->ReceiveEvent(event);
 }

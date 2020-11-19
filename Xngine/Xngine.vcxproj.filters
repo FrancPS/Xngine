@@ -436,6 +436,7 @@
     <ClInclude Include="externalLibs\MathGeoLib-master\Algorithm\Random\LCG.h">
       <Filter>MathGeoLib\Algorithm\Random</Filter>
     </ClInclude>
+    <ClInclude Include="Event.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">

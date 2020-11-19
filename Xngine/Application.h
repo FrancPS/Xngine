@@ -11,6 +11,7 @@ class ModuleCamera;
 class ModuleEditor;
 class ModuleDebugDraw;
 
+struct Event;
 
 class Application
 {
@@ -23,6 +24,8 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+
+	void BroadcastEvent(const Event& event);
 
 public:
 	ModuleRender* renderer = nullptr;

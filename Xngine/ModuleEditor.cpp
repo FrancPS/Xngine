@@ -39,8 +39,8 @@ update_status ModuleEditor::Update() {
 	ImGui::ShowDemoWindow();
 
 	//DRAWLOG("CONSOLE");	// Print logs to App console // !!! IT is creating the window every frame, even if no logs are sent (putting DRAWLOG inside LOG : errors when LOGs are called in main.cpp)
-	DrawMenu();
-
+	//DrawMenu();
+	Draw("CONSOLE", NULL);
 	ImGui::Render();
 
 	return UPDATE_CONTINUE;
@@ -93,3 +93,15 @@ void ModuleEditor::DrawMenu() {
 
 	ImGui::End();*/
 }  
+
+void ModuleEditor::Draw(const char* title, bool* p_opened) // TODO: this should go inside the log function, but main logs give error
+{
+	//ScrollToBottom = true;
+	ImGui::Begin(title, p_opened);
+	for (unsigned int i = 0; i < Buf.size(); ++i)
+		ImGui::TextUnformatted(Buf[i]);
+	/*if (ScrollToBottom)
+		ImGui::SetScrollHere(1.0f);
+	ScrollToBottom = false;*/
+	ImGui::End();
+}

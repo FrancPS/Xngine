@@ -139,6 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Event.h" />
     <ClInclude Include="externalLibs\debug-draw\debugdraw.h" />
     <ClInclude Include="externalLibs\debug-draw\debug_draw.hpp" />
     <ClInclude Include="externalLibs\debug-draw\ModuleDebugDraw.h" />

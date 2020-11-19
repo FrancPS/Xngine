@@ -17,7 +17,7 @@ ResourceMesh::ResourceMesh(const aiMesh* _mesh){
 	// Create Shader Program
 	unsigned vertexShader	= ResourceProgram::CompileShader(GL_VERTEX_SHADER, ResourceProgram::LoadShaderSource("./Shaders/default_VertexShader.glsl"));
 	unsigned fragmentShader = ResourceProgram::CompileShader(GL_FRAGMENT_SHADER, ResourceProgram::LoadShaderSource("./Shaders/default_FragmentShader.glsl"));
-	shaderProgram = ResourceProgram::CreateProgram(vertexShader, fragmentShader);
+	shaderProgram = ResourceProgram::CreateProgram(vertexShader, fragmentShader); // TODO: This should come as a reference
 }
 
 ResourceMesh::~ResourceMesh() {

@@ -11,7 +11,7 @@ private:
 
 	std::vector<ResourceMesh*>	modelMeshes;
 	unsigned int				numMeshes = 0;
-	std::vector<unsigned int>	modelMaterials; 
+	std::vector<unsigned int>	modelMaterials;
 	// we only use 1 material for now
 
 
@@ -25,12 +25,13 @@ public:
 	std::vector<unsigned int> GetTextures() const { return modelMaterials; }
 
 	void Load(const char* file_name);
+	void UnLoad();
 	void Draw();
 
 private:
 
 	void LoadMeshes(const aiScene* scene);
-	void LoadMaterials(const aiScene* scene);
+	void LoadMaterials(const aiScene* scene, const char* file_name);
 
 };
 

@@ -151,7 +151,8 @@ bool ModuleCamera::CleanUp()
 #pragma region // ---------- Getters & Setters ---------- //
 void ModuleCamera::SetFOV(unsigned width, unsigned height) {
 	float aspectRatio = width / height;
-	frustum.SetHorizontalFovAndAspectRatio(DEGTORAD * 90.0f, 1.3f * aspectRatio);
+	//  TODO when aspect ratio < 1, cam goes boom
+	frustum.SetVerticalFovAndAspectRatio(frustum.VerticalFov(), aspectRatio);
 }
 #pragma endregion 
 

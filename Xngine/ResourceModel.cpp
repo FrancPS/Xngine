@@ -6,6 +6,7 @@
 #include "assimp/scene.h"
 #include "assimp/cimport.h"
 #include "assimp/postprocess.h"
+#include "GL/glew.h"
 
 
 ResourceModel::ResourceModel() {
@@ -28,9 +29,9 @@ void ResourceModel::Load(const char* file_name)
 	scene = aiImportFile(file_name, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene)
 	{
-		LOG("Scene loaded corretly");
+		LOG("Scene loaded correctly");
 		
-		LoadMaterials(scene);
+		LoadMaterials(scene, file_name);
 		LoadMeshes(scene);
 	}
 	else
@@ -39,7 +40,27 @@ void ResourceModel::Load(const char* file_name)
 	}
 }
 
-void ResourceModel::LoadMaterials(const aiScene* scene)
+void ResourceModel::UnLoad()
+{
+	LOG("Unloading the current module");
+	unsigned int i;
+	// destroy objects from mesh list
+	for (i = 0; i < modelMeshes.size(); i++)
+	{
+		delete modelMeshes[i];
+	}
+	numMeshes = 0;
+	modelMeshes.clear();
+
+	// erase modelMaterials
+	for (i = 0; i < modelMaterials.size(); i++)
+	{
+		glDeleteTextures(1, &modelMaterials[i]);
+	}
+	modelMaterials.clear();
+}
+
+void ResourceModel::LoadMaterials(const aiScene* scene, const char* file_name)
 {
 	aiString file;
 	modelMaterials.reserve(scene->mNumMaterials);
@@ -48,9 +69,10 @@ void ResourceModel::LoadMaterials(const aiScene* scene)
 		if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &file) == AI_SUCCESS)
 		{
 			// Populate materials list
-			modelMaterials.push_back(ResourceTexture::LoadTexture(file.data));
+			modelMaterials.push_back(ResourceTexture::LoadTexture(file.data, file_name));
 		}
 	}
+	LOG("Materials loaded correctly");
 }
 
 void ResourceModel::LoadMeshes(const aiScene* scene) {
@@ -62,6 +84,7 @@ void ResourceModel::LoadMeshes(const aiScene* scene) {
 		modelMeshes.push_back(new ResourceMesh(scene->mMeshes[i]));
 		numMeshes++;
 	}
+	LOG("Meshes loaded correctly");
 }
 
 void ResourceModel::Draw() {

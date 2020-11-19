@@ -4,6 +4,8 @@
 
 class Application;
 
+struct Event;
+
 class Module
 {
 public:
@@ -41,4 +43,7 @@ public:
 	{ 
 		return true; 
 	}
+
+	virtual void ReceiveEvent(const Event& event)
+	{ }
 };

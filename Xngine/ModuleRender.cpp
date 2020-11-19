@@ -4,6 +4,7 @@
 #include "ModuleWindow.h"
 #include "ModuleCamera.h"
 #include "ModuleDebugDraw.h"
+#include "Event.h"
 #include "SDL.h"
 #include "GL/glew.h"
 #include "Geometry/Frustum.h"
@@ -114,13 +115,21 @@ bool ModuleRender::CleanUp()
 	SDL_GL_DeleteContext(this->context);
 	return true;
 }
-#pragma endregion
 
-#pragma region // ------------ Module Render ------------ //
-void ModuleRender::OnWindowResized(unsigned width, unsigned height)
+void ModuleRender::ReceiveEvent(const Event& event)
 {
-	glViewport(0, 0, width, height);
-	App->camera->SetFOV(width, height);
+	switch (event.type)
+	{
+	case Event::window_resize:
+		glViewport(0, 0, event.point2d.x, event.point2d.y);
+		
+		App->camera->SetFOV(event.point2d.x, event.point2d.y);
+		break;
+	case Event::file_dropped:
+		LOG("A file has been dropped %s", event.string.ptr);
+		bakerhouse.UnLoad();
+		bakerhouse.Load(event.string.ptr);
+	}
 }
 #pragma endregion
 
