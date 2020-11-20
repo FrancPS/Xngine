@@ -19,12 +19,12 @@ class Application
 
 public:
 
-	ModuleRender* renderer = nullptr;
-	ModuleWindow* window = nullptr;
-	ModuleInput* input = nullptr;
-	ModuleCamera* camera = nullptr;
-	ModuleEditor* editor = nullptr;
-	ModuleDebugDraw* debug_draw = nullptr;
+	ModuleRender*		renderer	= nullptr;
+	ModuleWindow*		window		= nullptr;
+	ModuleInput*		input		= nullptr;
+	ModuleCamera*		camera		= nullptr;
+	ModuleEditor*		editor		= nullptr;
+	ModuleDebugDraw*	debug_draw	= nullptr;
 
 private:
 

@@ -6,11 +6,20 @@
 #include "Window.h"
 #include <list>
 
+class WindowConfig;
+class WindowConsole;
+class WindowMenu;
+class WindowProperties;
+
 
 class ModuleEditor : public Module
 {
 
 private:
+	WindowConfig*		winConfig		= nullptr;
+	WindowConsole*		winConsole		= nullptr;
+	WindowMenu*			winMenu			= nullptr;
+	WindowProperties*	winProperties	= nullptr;
 
 	std::list<Window*> windows;
 

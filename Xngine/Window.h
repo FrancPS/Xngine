@@ -1,5 +1,8 @@
 #ifndef __Window_H__
 #define __Window_H__
+
+#include "imgui.h"
+
 class Window
 {
 public:

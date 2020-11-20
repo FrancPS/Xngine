@@ -83,6 +83,12 @@ update_status ModuleCamera::Update()
 		MoveYAxis(-1);
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
+		LookAt(0, 0, 0);
+		// TODO: FUNCTION TO SELECT SPECIFIC OBJECT/coordinates
+		// TODO: Smooth transition
+		// TODO: Should place the camera near the object
+	}
 	// ----- ROTATION COMMANDS ----- //
 	// KeyUP -- Pitch ++
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && !(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)) {

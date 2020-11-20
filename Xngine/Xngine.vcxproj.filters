@@ -160,7 +160,10 @@
     <ClCompile Include="externalLibs\MathGeoLib-master\Algorithm\Random\LCG.cpp">
       <Filter>MathGeoLib\Algorithm\Random</Filter>
     </ClCompile>
-    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="WindowConsole.cpp" />
+    <ClCompile Include="WindowConfig.cpp" />
+    <ClCompile Include="WindowProperties.cpp" />
+    <ClCompile Include="WindowMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -439,6 +442,10 @@
     </ClInclude>
     <ClInclude Include="Event.h" />
     <ClInclude Include="Window.h" />
+    <ClInclude Include="WindowConsole.h" />
+    <ClInclude Include="WindowConfig.h" />
+    <ClInclude Include="WindowProperties.h" />
+    <ClInclude Include="WindowMenu.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">

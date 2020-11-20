@@ -4,6 +4,10 @@
 #include "ModuleEditor.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
+#include "WindowConfig.h"
+#include "WindowConsole.h"
+#include "WindowMenu.h"
+#include "WindowProperties.h"
 #include "SDL.h"
 #include "GL/glew.h"
 #include "imgui.h"
@@ -22,6 +26,11 @@ bool ModuleEditor::Init() {
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer->GetContext());
 	ImGui_ImplOpenGL3_Init();
 
+	windows.push_back(winConfig		= new WindowConfig());
+	windows.push_back(winConsole	= new WindowConsole());
+	windows.push_back(winMenu		= new WindowMenu());
+	windows.push_back(winProperties = new WindowProperties());
+
 	return true;
 }
 
@@ -37,6 +46,7 @@ update_status ModuleEditor::Update() {
 	
 	ImGui::ShowDemoWindow();
 	Draw();
+
 	ImGui::Render();
 
 	return UPDATE_CONTINUE;
