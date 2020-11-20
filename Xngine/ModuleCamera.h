@@ -45,11 +45,13 @@ private:
 	// ---------- Camera Traslations --------- //
 	bool MoveFrontAxis(float _speed);
 	bool MoveRightAxis(float _speed);
+	bool MoveUpAxis(float _speed);
 	bool MoveYAxis(int upOrDown);								 // Yaws in the absolute Y axis, its less disorienting
 
 	// ----------- Camera Rotations ---------- //
 	bool Pitch(float _speed);
 	bool Yaw(float _speed);
+	bool Orbit(float _speedFront, float _speedUp, float3 focusPos);
 
 };
 #endif // __ModuleCamera_H__

@@ -30,7 +30,7 @@ bool ModuleCamera::Init()
 	frustum.SetPos(float3(0, 1, -2));
 	frustum.SetFront(float3::unitZ);
 	frustum.SetUp(float3::unitY);
-
+	
 	return true;
 }
 
@@ -121,12 +121,17 @@ update_status ModuleCamera::Update()
 
 	// RIGHT CLICK -- Rotation
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT) {
-		Yaw(App->input->GetMouseMotion().x * deltaTime);
-		Pitch(App->input->GetMouseMotion().y * deltaTime);
+		Yaw(-App->input->GetMouseMotion().x * deltaTime);
+		Pitch(-App->input->GetMouseMotion().y * deltaTime);
 	}
 
-	
+	// ALT + LClick -- Orbit
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && App->input->GetKey(SDL_SCANCODE_LALT)) {
+		Orbit(-App->input->GetMouseMotion().x * deltaTime, App->input->GetMouseMotion().y * deltaTime, float3::float3(0,0,0));
+	}
+
 	mTicksCount = SDL_GetTicks();	// Update tick counts (deltaTime for next frame)
+
 	return UPDATE_CONTINUE;
 }
 
@@ -158,10 +163,10 @@ void ModuleCamera::SetFOV(unsigned int width, unsigned int height) {
 
 #pragma region // ------------ Module Camera ------------ //
 bool ModuleCamera::LookAt(int _x, int _y, int _z) {
-	float3x3	rotationMatrix = float3x3::LookAt(frustum.Front(), float3::float3(_x, _y, _z), frustum.Up(), float3::float3(0, 1, 0));
-	vec			oldFront		= frustum.Front().Normalized();
-	vec			oldUp			= frustum.Up().Normalized();
-
+	float3 targetDir = float3(_x, _y, _z) - frustum.Pos();
+	float3x3	rotationMatrix	= float3x3::LookAt(frustum.Front(), targetDir.Normalized(), frustum.Up(), float3::float3(0, 1, 0));
+	vec			oldFront		= frustum.Front();
+	vec			oldUp			= frustum.Up();
 	frustum.SetFront(rotationMatrix * oldFront);
 	frustum.SetUp(rotationMatrix * oldUp);
 	return true;
@@ -183,6 +188,15 @@ bool ModuleCamera::MoveRightAxis(float _speed)
 {
 	float4x4 translationM = float4x4::identity;
 	translationM.SetTranslatePart(frustum.WorldRight() * _speed);
+	frustum.SetPos(translationM.TransformPos(frustum.Pos()));
+
+	return true;
+}
+
+bool ModuleCamera::MoveUpAxis(float _speed)
+{
+	float4x4 translationM = float4x4::identity;
+	translationM.SetTranslatePart(frustum.Up() * _speed);
 	frustum.SetPos(translationM.TransformPos(frustum.Pos()));
 
 	return true;
@@ -216,6 +230,24 @@ bool ModuleCamera::Yaw(float _speed) {
 
 	frustum.SetFront(rotationMatrix * oldFront);
 	frustum.SetUp(rotationMatrix * oldUp);
+	return true;
+}
+
+bool ModuleCamera::Orbit(float _speedFront, float _speedUp, float3 focusPos) {
+	// make speed proportional to the distance to the object
+	int x = focusPos.x - frustum.Pos().x;
+	int y = focusPos.y - frustum.Pos().y;
+	int z = focusPos.z - frustum.Pos().z;
+
+	float distanceToFocus = sqrt((float)(x * x + y * y + z * z));
+
+	// move in Frustrum.Up
+	MoveUpAxis(_speedUp* distanceToFocus);
+	// move in Frustrum.Right
+	MoveRightAxis(_speedFront* distanceToFocus);
+	
+	LookAt(focusPos.x, focusPos.y, focusPos.z);
+	
 	return true;
 }
 
