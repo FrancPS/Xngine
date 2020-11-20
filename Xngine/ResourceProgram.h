@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __ResourceProgram_H__
+#define __ResourceProgram_H__
 
 #include "Module.h"
 #include "Globals.h"
@@ -14,4 +15,4 @@ public:
 	static unsigned int	CompileShader(unsigned type, const char* source);
 	static unsigned	int CreateProgram(unsigned vtx_shader, unsigned frg_shader);
 };
-
+#endif // __ResourceProgram_H__

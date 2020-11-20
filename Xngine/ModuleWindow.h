@@ -1,5 +1,5 @@
 #ifndef __ModuleWindow_H__
-#define __ModuleWindow_H__ //TODO
+#define __ModuleWindow_H__
 
 #include "Module.h"
 #include "SDL.h"

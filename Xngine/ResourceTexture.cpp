@@ -68,10 +68,7 @@ unsigned int ResourceTexture::LoadTexture(const char* file_path, const char* mes
 			dirTex.append(filename);
 			const char* dirTexture = dirTex.c_str();
 			success = ilLoadImage(dirTexture);
-			delete dirTexture;
 		}
-		delete filename;
-		delete newPath;
 	}
 
 	if (success) {

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __ModuleInput_H__
+#define __ModuleInput_H__
+
 #include "Module.h"
 #include "Globals.h"
 #include "Point.h"
@@ -61,3 +63,4 @@ public:
 	const float& GetMouseWheel() const			{ return wheel; }
 
 };
+#endif // __ModuleInput_H__

@@ -77,7 +77,7 @@ bool ModuleRender::Init()
 	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, true);
 # endif
 
-	bakerhouse.Load("BakerHouse.fbx"); //TODO make a general call for loading a texture (in input?)
+	bakerhouse.Load("BakerHouse.fbx");
 
 	return true;
 }

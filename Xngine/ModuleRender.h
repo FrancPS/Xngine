@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __ModuleRender_H__
+#define __ModuleRender_H__
+
 #include "Module.h"
 #include "ResourceModel.h"
 #include "Globals.h"
@@ -32,3 +34,4 @@ public:
 	void* GetContext() const		{ return this->context; }
 	void SetContext(void* _context) { this->context = _context; }
 };
+#endif // __ModuleRender_H__

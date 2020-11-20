@@ -239,6 +239,7 @@
     <ClInclude Include="ResourceTexture.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -302,6 +303,7 @@
     <ClCompile Include="ModuleRender.cpp" />
     <ClCompile Include="ResourceTexture.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="externalLibs\MathGeoLib-master\emscripten\library_system.js" />

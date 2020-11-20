@@ -5,12 +5,7 @@
 
 
 //Dubtes MARC: ---------
-// Pq Point.h no funciona? //debug
-// C/C++ > Preprocessor _MBCS
-
-
-// Pq cal fer copypaste de imgui i no val nomes l'include? pq amb altres si q val¿
-// LOG draw?
+// quan Carrego 3 objectes
 
 
 

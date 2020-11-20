@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __ResourceMesh_H__
+#define __ResourceMesh_H__
 
 #include "Globals.h"
 #include "assimp/mesh.h"
@@ -31,4 +32,4 @@ private:
 	void CreateVAO();
 
 };
-
+#endif // __ResourceMesh_H__

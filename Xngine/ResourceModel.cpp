@@ -19,6 +19,12 @@ ResourceModel::~ResourceModel() {
 	for (i = 0; i < modelMeshes.size(); i++)
 	{
 		delete modelMeshes[i];
+		modelMeshes[i] = nullptr;
+	}
+	// erase modelMaterials
+	for (i = 0; i < modelMaterials.size(); i++)
+	{
+		glDeleteTextures(1, &modelMaterials[i]);
 	}
 }
 

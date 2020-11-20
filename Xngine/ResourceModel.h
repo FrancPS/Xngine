@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __ResourceModel_H__
+#define __ResourceModel_H__
 #include "Globals.h"
 #include "ResourceMesh.h"
 #include "assimp/scene.h"
@@ -34,4 +35,4 @@ private:
 	void LoadMaterials(const aiScene* scene, const char* file_name);
 
 };
-
+#endif // __ResourceModel_H__

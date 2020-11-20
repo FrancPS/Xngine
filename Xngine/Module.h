@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __Module_H__
+#define __Module_H__
 
 #include "Globals.h"
 
@@ -47,3 +48,4 @@ public:
 	virtual void ReceiveEvent(const Event& event)
 	{ }
 };
+#endif // __Module_H__

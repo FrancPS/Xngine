@@ -4,7 +4,6 @@
 #include "ModuleEditor.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
-#include "ModuleRender.h"
 #include "SDL.h"
 #include "GL/glew.h"
 #include "imgui.h"
@@ -37,10 +36,7 @@ update_status ModuleEditor::PreUpdate() {
 update_status ModuleEditor::Update() {
 	
 	ImGui::ShowDemoWindow();
-
-	//DRAWLOG("CONSOLE");	// Print logs to App console // !!! IT is creating the window every frame, even if no logs are sent (putting DRAWLOG inside LOG : errors when LOGs are called in main.cpp)
-	//DrawMenu();
-	Draw("CONSOLE", NULL);
+	Draw();
 	ImGui::Render();
 
 	return UPDATE_CONTINUE;
@@ -52,6 +48,10 @@ update_status ModuleEditor::PostUpdate() {
 }
 
 bool ModuleEditor::CleanUp() {
+
+	for (std::list<Window*>::iterator it = windows.begin(); it != windows.end(); ++it)
+		(*it)->CleanUp();
+
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown(); 
 	ImGui::DestroyContext();
@@ -59,49 +59,7 @@ bool ModuleEditor::CleanUp() {
 }
 #pragma endregion
 
-
-
-void ModuleEditor::DrawMenu() {
-	ImGui::Begin("MENU");
-	
-	ImGui::End();
-	/*ImGui::Begin("MENU");
-	
-	if (ImGui::BeginMenuBar())
-    {
-        if (ImGui::BeginMenu("Menu"))
-        {
-            
-            ImGui::EndMenu();
-        }
-        if (ImGui::BeginMenu("Examples"))
-        {
-            ImGui::MenuItem("Main menu bar", NULL);
-            ImGui::MenuItem("Console", NULL);
-            ImGui::MenuItem("Log", NULL);
-            ImGui::EndMenu();
-        }
-        if (ImGui::BeginMenu("Tools"))
-        {
-			ImGui::MenuItem("Main menu bar", NULL);
-			ImGui::MenuItem("Console", NULL);
-			ImGui::MenuItem("Log", NULL);
-            ImGui::EndMenu();
-        }
-        ImGui::EndMenuBar();
-	}
-
-	ImGui::End();*/
-}  
-
-void ModuleEditor::Draw(const char* title, bool* p_opened) // TODO: this should go inside the log function, but main logs give error
-{
-	//ScrollToBottom = true;
-	ImGui::Begin(title, p_opened);
-	for (unsigned int i = 0; i < Buf.size(); ++i)
-		ImGui::TextUnformatted(Buf[i]);
-	/*if (ScrollToBottom)
-		ImGui::SetScrollHere(1.0f);
-	ScrollToBottom = false;*/
-	ImGui::End();
+void ModuleEditor::Draw() {
+	for (std::list<Window*>::iterator it = windows.begin(); it != windows.end(); ++it)
+		(*it)->Draw();
 }

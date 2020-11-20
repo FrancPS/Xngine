@@ -149,9 +149,8 @@ bool ModuleCamera::CleanUp()
 
 
 #pragma region // ---------- Getters & Setters ---------- //
-void ModuleCamera::SetFOV(unsigned width, unsigned height) {
-	float aspectRatio = width / height;
-	//  TODO when aspect ratio < 1, cam goes boom
+void ModuleCamera::SetFOV(unsigned int width, unsigned int height) {
+	float aspectRatio = width / (float)height;
 	frustum.SetVerticalFovAndAspectRatio(frustum.VerticalFov(), aspectRatio);
 }
 #pragma endregion 

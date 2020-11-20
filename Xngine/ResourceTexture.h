@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __ResourceTexture_H__
+#define __ResourceTexture_H__
 #include "Module.h"
 #include "Globals.h"
 
@@ -13,4 +14,4 @@ public:
 	static unsigned int LoadTexture(const char* file_name, const char* mesh_path);
 
 };
-
+#endif // __ResourceTexture_H__

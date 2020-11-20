@@ -1,7 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
-#include "ModuleRender.h" // TODO Broadcast event to window resize
 #include "Event.h"
 #include "imgui.h"
 #include "imgui_internal.h"
@@ -171,6 +170,8 @@ bool ModuleInput::CleanUp()
 {
 	LOG("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
+	delete[] keyboard;
+	keyboard = nullptr;
 	return true;
 }
 #pragma endregion

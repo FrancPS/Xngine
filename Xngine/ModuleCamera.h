@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __ModuleCamera_H__
+#define __ModuleCamera_H__
+
 #include "Globals.h"
 #include "Module.h"
 #include "Geometry/Frustum.h"
@@ -33,7 +35,7 @@ public:
 
 	void		SetPosition(float _x, float _y, float _z)		{ frustum.SetPos(float3::float3(_x, _y, _z)); }
 	void		SetPlaneDistances(float _zNear, float _zFar)	{ frustum.SetViewPlaneDistances(_zNear, _zFar); }
-	void		SetFOV(unsigned width, unsigned height);		// set the horizontal FOV keeping the aspect ratio		TODO: Resizing deforms the object
+	void		SetFOV(unsigned int width, unsigned int height);		// set the horizontal FOV keeping the aspect ratio
 	void		SetAspectRatio();								// change the vertical FOV to meet the new aspect ratio.
  
 	// ------------ Module Camera ------------ //
@@ -50,4 +52,4 @@ private:
 	bool Yaw(float _speed);
 
 };
-
+#endif // __ModuleCamera_H__
