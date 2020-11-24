@@ -31,7 +31,7 @@ Application::~Application()
 bool Application::Init()
 {
 	bool ret = true;
-
+	
 	for(vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
 		ret = (*it)->Init();
 

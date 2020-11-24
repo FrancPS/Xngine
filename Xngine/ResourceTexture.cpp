@@ -32,10 +32,6 @@ ResourceTexture::~ResourceTexture()
 unsigned int ResourceTexture::LoadTexture(const char* file_path, const char* mesh_path)
 {
 	LOG("Initialising DevIL context");
-
-	if (ilGetInteger(IL_VERSION_NUM) < IL_VERSION) {
-		LOG("ERROR: WRONG DevIL version");
-	}
 	ilInit();
 	iluInit();
 	ilutInit();

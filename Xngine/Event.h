@@ -6,6 +6,7 @@ struct Event
 	enum EventType
 	{
 		window_resize,
+		window_fullscreen,
 		file_dropped,
 	} type;
 

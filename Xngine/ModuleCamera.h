@@ -7,13 +7,19 @@
 
 class ModuleCamera : public Module
 {
+public:
+
+	float		mTicks;
+	Frustum		frustum;
 
 private:
-	Frustum			frustum;
+
+	
 	float4x4		projectionMatrix;	// Projection Matrix
 	float4x4		viewMatrix;			// View Matrix
 	unsigned int	mTicksCount;		// Tick counter for deltaTime
-
+	float			deltaTime;
+	
 
 public:
 	

@@ -4,7 +4,6 @@
 #include "ModuleWindow.h"
 #include "ModuleCamera.h"
 #include "ModuleDebugDraw.h"
-#include "Event.h"
 #include "SDL.h"
 #include "GL/glew.h"
 #include "Geometry/Frustum.h"
@@ -62,12 +61,11 @@ bool ModuleRender::Init()
 
 	// -- GLEW INIT -- //
 	GLenum err = glewInit();
-	// … check for errors
-	LOG("Using Glew %s", glewGetString(GLEW_VERSION));// Should be 2.0
-	LOG("Vendor: %s", glGetString(GL_VENDOR));
-	LOG("Renderer: %s", glGetString(GL_RENDERER));
-	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+
+	// Send GPU, OpenGL & glew info to App
+	App->vOpenGL	= (char*)glGetString(GL_VERSION);
+	App->vGlew		= (char*)glewGetString(GLEW_VERSION);
+	App->gpu		= (char*)glGetString(GL_RENDERER);
 
 # ifdef _DEBUG
 	glEnable(GL_DEBUG_OUTPUT);
@@ -121,8 +119,8 @@ void ModuleRender::ReceiveEvent(const Event& event)
 	switch (event.type)
 	{
 	case Event::window_resize:
+	case Event::window_fullscreen:
 		glViewport(0, 0, event.point2d.x, event.point2d.y);
-		
 		App->camera->SetFOV(event.point2d.x, event.point2d.y);
 		break;
 	case Event::file_dropped:

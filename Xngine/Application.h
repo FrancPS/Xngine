@@ -26,6 +26,28 @@ public:
 	ModuleEditor*		editor		= nullptr;
 	ModuleDebugDraw*	debug_draw	= nullptr;
 
+	// Hardware information //
+	// in ModuleWindow.h
+	int		systemRAM = 0;
+	int		cpuCores		= 0;
+	int		cpuCacheSize	= 0;
+	bool	hasAVX		= false;
+	bool	hasAVX2		= false;
+	bool	hasAltiVec	= false;
+	bool	hasMMX		= false;
+	bool 	hasRDTSC	= false;
+	bool 	hasSSE		= false;
+	bool 	hasSSE2		= false;
+	bool 	hasSSE3		= false;
+	bool 	hasSSE41	= false;
+	bool 	hasSSE42	= false;
+	const char* gpu;
+
+	// Software
+	char vSDL[10];
+	const char* vOpenGL;
+	const char* vGlew;
+
 private:
 
 	std::vector<Module*> modules;

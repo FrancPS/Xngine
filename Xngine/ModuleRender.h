@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "ResourceModel.h"
+#include "Event.h"
 #include "Globals.h"
 
 struct SDL_Texture;

@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleCamera.h"
+#include "ModuleWindow.h"
 #include "ModuleInput.h"
 #include "Geometry/Frustum.h"
 #include "Math/float3x3.h"
@@ -10,6 +11,8 @@
 // Constructor
 ModuleCamera::ModuleCamera()
 {
+	deltaTime = 0;
+	mTicks = 0;
 	mTicksCount = 0;
 }
 
@@ -25,7 +28,7 @@ bool ModuleCamera::Init()
 
 	frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
 	frustum.SetViewPlaneDistances(0.1f, 200.0f);
-	frustum.SetHorizontalFovAndAspectRatio(DEGTORAD * 90.0f, 1.3f);
+	frustum.SetHorizontalFovAndAspectRatio(DEGTORAD * 90.0f, App->window->GetAspectRatio());
 
 	frustum.SetPos(float3(0, 1, -2));
 	frustum.SetFront(float3::unitZ);
@@ -42,7 +45,8 @@ update_status ModuleCamera::PreUpdate()
 
 update_status ModuleCamera::Update() 
 {
-	float deltaTime = (SDL_GetTicks() - mTicksCount) / 100.f; // Get deltaTime of current frame
+	mTicks = (SDL_GetTicks() - mTicksCount);
+	deltaTime = mTicks / 60.f; // Get deltaTime of current frame
 
 	/// ---------------------- KEYS ---------------------- ///
 	// ---- TRANSLATION COMMANDS --- //
@@ -138,6 +142,8 @@ update_status ModuleCamera::Update()
 
 	mTicksCount = SDL_GetTicks();	// Update tick counts (deltaTime for next frame)
 
+	//LOG("LOOKING AT: %f,%f,%f", frustum.Front().x, frustum.Front().y, frustum.Front().z);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -162,7 +168,7 @@ bool ModuleCamera::CleanUp()
 #pragma region // ---------- Getters & Setters ---------- //
 void ModuleCamera::SetFOV(unsigned int width, unsigned int height) {
 	float aspectRatio = width / (float)height;
-	frustum.SetVerticalFovAndAspectRatio(frustum.VerticalFov(), aspectRatio);
+	frustum.SetHorizontalFovAndAspectRatio(frustum.HorizontalFov(), aspectRatio);
 }
 #pragma endregion 
 
@@ -173,8 +179,8 @@ bool ModuleCamera::LookAt(int _x, int _y, int _z) {
 	float3x3	rotationMatrix	= float3x3::LookAt(frustum.Front(), targetDir.Normalized(), frustum.Up(), float3::float3(0, 1, 0));
 	vec			oldFront		= frustum.Front();
 	vec			oldUp			= frustum.Up();
-	frustum.SetFront(rotationMatrix * oldFront);
-	frustum.SetUp(rotationMatrix * oldUp);
+	frustum.SetFront((rotationMatrix * oldFront).Normalized());
+	frustum.SetUp((rotationMatrix * oldUp).Normalized());
 	return true;
 }
 #pragma endregion
@@ -222,9 +228,9 @@ bool ModuleCamera::Pitch(float _speed) {
 	vec			newFront = rotationMatrix * frustum.Front().Normalized();
 	vec			newUp = rotationMatrix * frustum.Up().Normalized();
 
-	if (newFront.AngleBetweenNorm(float3::float3(0, 1, 0)) > 0.1f && newFront.AngleBetweenNorm(float3::float3(0, -1, 0)) > 0.1f) {	// Limit angle from vertical to 0.1rad //TODO bug: repeatedly rotating with the mouse bracks the condition!
-		frustum.SetFront(newFront);
-		frustum.SetUp(newUp);
+	if (newFront.AngleBetweenNorm(float3::float3(0, 1, 0)) > 0.1f && newFront.AngleBetweenNorm(float3::float3(0, -1, 0)) > 0.1f) {	// Limit angle from vertical to 0.1rad //BUG: repeatedly rotating with the mouse bracks the condition!
+		frustum.SetFront(newFront.Normalized());
+		frustum.SetUp(newUp.Normalized());
 	}
 	return true;
 }
@@ -234,8 +240,8 @@ bool ModuleCamera::Yaw(float _speed) {
 	vec			oldFront = frustum.Front().Normalized();
 	vec			oldUp = frustum.Up().Normalized();
 
-	frustum.SetFront(rotationMatrix * oldFront);
-	frustum.SetUp(rotationMatrix * oldUp);
+	frustum.SetFront((rotationMatrix * oldFront).Normalized());
+	frustum.SetUp((rotationMatrix * oldUp).Normalized());
 	return true;
 }
 
@@ -252,7 +258,7 @@ bool ModuleCamera::Orbit(float _speedFront, float _speedUp, float3 focusPos) {
 	// move in Frustrum.Right
 	MoveRightAxis(_speedFront* distanceToFocus);
 	
-	LookAt(focusPos.x, focusPos.y, focusPos.z);
+	LookAt(focusPos.x, focusPos.y, focusPos.z); // BUG: fast mouse moves make camera go away, because we move on the axis and then look there. We should apply rotation with the movement along!
 	
 	return true;
 }

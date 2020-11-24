@@ -17,9 +17,8 @@ enum update_status
 };
 
 // Configuration -----------
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
 #define FULLSCREEN false
+#define BORDERLESS false
 #define VSYNC true
 #define RESIZABLE true
 #define TITLE "Xngine"
