@@ -2,11 +2,16 @@
 #define __WindowProperties_H__
 
 #include "Window.h"
+#include "ResourceModel.h"
+
 class WindowProperties : public Window
 {
 public:
+	ResourceModel* model;
 
-	//WindowProperties();
+public:
+	
+	WindowProperties();
 	bool Draw();
 	//bool CleanUp();
 };

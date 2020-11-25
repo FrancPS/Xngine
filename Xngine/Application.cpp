@@ -4,6 +4,7 @@
 #include "ModuleEditor.h"
 #include "ModuleInput.h"
 #include "ModuleCamera.h"
+#include "ModuleTexture.h"
 #include "ModuleDebugDraw.h"
 
 using namespace std;
@@ -12,6 +13,7 @@ Application::Application()
 {
 	// Order matters: they will Init/start/update in this order
 	modules.push_back(window = new ModuleWindow());
+	modules.push_back(textures = new ModuleTexture());
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(debug_draw = new ModuleDebugDraw());
 	

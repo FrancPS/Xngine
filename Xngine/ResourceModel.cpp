@@ -3,6 +3,7 @@
 #include "ResourceModel.h"
 #include "ResourceTexture.h"
 #include "ResourceMesh.h"
+#include "ModuleTexture.h"
 #include "assimp/scene.h"
 #include "assimp/cimport.h"
 #include "assimp/postprocess.h"
@@ -75,7 +76,7 @@ void ResourceModel::LoadMaterials(const aiScene* scene, const char* file_name)
 		if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &file) == AI_SUCCESS)
 		{
 			// Populate materials list
-			modelMaterials.push_back(ResourceTexture::LoadTexture(file.data, file_name));
+			modelMaterials.push_back(App->textures->LoadTexture(file.data, file_name));
 		}
 	}
 	LOG("Materials loaded correctly");

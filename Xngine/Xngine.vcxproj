@@ -228,6 +228,7 @@
     <ClInclude Include="externalLibs\MathGeoLib-master\Math\vec2d.h" />
     <ClInclude Include="externalLibs\MathGeoLib-master\Time\Clock.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="ModuleTexture.h" />
     <ClInclude Include="ResourceMesh.h" />
     <ClInclude Include="ResourceModel.h" />
     <ClInclude Include="Module.h" />
@@ -298,6 +299,7 @@
     <ClCompile Include="externalLibs\MathGeoLib-master\Time\Clock.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ModuleTexture.cpp" />
     <ClCompile Include="ResourceMesh.cpp" />
     <ClCompile Include="ResourceModel.cpp" />
     <ClCompile Include="ModuleCamera.cpp" />

@@ -164,6 +164,7 @@
     <ClCompile Include="WindowConfig.cpp" />
     <ClCompile Include="WindowProperties.cpp" />
     <ClCompile Include="WindowMenu.cpp" />
+    <ClCompile Include="ModuleTexture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -446,6 +447,7 @@
     <ClInclude Include="WindowConfig.h" />
     <ClInclude Include="WindowProperties.h" />
     <ClInclude Include="WindowMenu.h" />
+    <ClInclude Include="ModuleTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">

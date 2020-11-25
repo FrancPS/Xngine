@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "WindowConfig.h"
 #include "ModuleCamera.h"
+#include "ModuleRender.h"
 #include "ModuleWindow.h"
 #include "MathGeoLib.h"
 
@@ -52,6 +53,15 @@ bool WindowConfig::Draw() {
         if (ImGui::Button("Toggle Borderless"))
             App->window->ToggleBorderless();
     }
+    
+    // ----- RENDER CONFIG ----- //
+    if (ImGui::CollapsingHeader("Renderer Configuration")) {
+        ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Select Background Color:");
+        ImGui::ColorPicker4("MyColor##1", (float*)&App->renderer->backgroundColor, NULL, false);
+
+        ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Select Grid Color:");
+        ImGui::ColorPicker4("MyColor##2", (float*)&App->renderer->gridColor, NULL, false);
+    }
 
     // ----- CAMERA CONFIG ----- //
     if (ImGui::CollapsingHeader("Camera Configuration"))
@@ -77,7 +87,7 @@ bool WindowConfig::Draw() {
         ImGui::BulletText("Number of Cores: %d", App->cpuCores);
         ImGui::BulletText("L1 Cache size: %d Bytes", App->cpuCacheSize);
         std::string caps = "";
-        ImGui::BulletText("Capacitors: %s", PrintCapacitors(caps));
+        ImGui::Bullet(); ImGui::TextWrapped("Capacitors: %s", PrintCapacitors(caps));
         ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "RAM :");
         ImGui::BulletText("System RAM: %.1f MB", App->systemRAM/(float)1024);
         ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "GPU :");

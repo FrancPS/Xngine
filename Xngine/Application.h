@@ -10,6 +10,7 @@ class ModuleWindow;
 class ModuleInput;
 class ModuleCamera;
 class ModuleEditor;
+class ModuleTexture;
 class ModuleDebugDraw;
 
 struct Event;
@@ -24,6 +25,7 @@ public:
 	ModuleInput*		input		= nullptr;
 	ModuleCamera*		camera		= nullptr;
 	ModuleEditor*		editor		= nullptr;
+	ModuleTexture*		textures	= nullptr;
 	ModuleDebugDraw*	debug_draw	= nullptr;
 
 	// Hardware information //

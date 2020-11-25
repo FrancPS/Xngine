@@ -1,10 +1,12 @@
 #ifndef __ModuleRender_H__
 #define __ModuleRender_H__
 
+#include "Globals.h"
 #include "Module.h"
 #include "ResourceModel.h"
 #include "Event.h"
-#include "Globals.h"
+#include "Math/float4.h"
+#include "Math/float3.h"
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -13,9 +15,13 @@ struct SDL_Rect;
 class ModuleRender : public Module
 {
 
+public:
+	ResourceModel bakerhouse; //Must be public for WindowProperties. This is hardcoded, so nevermind
+	float4 backgroundColor;
+	float4 gridColor;
+
 private:
 	void* context;
-	ResourceModel bakerhouse;
 
 public:
 

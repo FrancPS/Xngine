@@ -42,7 +42,10 @@ void __stdcall OurOpenGLErrorFunction(GLenum source, GLenum type, GLuint id, GLe
 	LOG("<Source:%s> <Type:%s> <Severity:%s> <ID:%d> <Message:%s>\n", tmp_source, tmp_type, tmp_severity, id, message);
 }
 
-ModuleRender::ModuleRender() {}
+ModuleRender::ModuleRender() {
+	backgroundColor = float4(0.1f, 0.1f, 0.1f, 1.0f);
+	gridColor = float4(0.9f, 0.1f, 0.1f, 1.0f);
+}
 
 // Destructor
 ModuleRender::~ModuleRender() {}
@@ -82,7 +85,7 @@ bool ModuleRender::Init()
 
 update_status ModuleRender::PreUpdate()
 {
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glClearColor(backgroundColor.x, backgroundColor.y, backgroundColor.z, backgroundColor.w);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	return UPDATE_CONTINUE;
 }
@@ -92,7 +95,7 @@ update_status ModuleRender::Update()
 	// Draw the grid and origin
 	int w, h;
 	SDL_GetWindowSize(App->window->window, &w, &h);
-	App->debug_draw->Draw(App->camera->GetViewMatrix(), App->camera->GetProjectionMatrix(), w, h);
+	App->debug_draw->Draw(App->camera->GetViewMatrix(), App->camera->GetProjectionMatrix(), w, h, gridColor.xyz());
 
 	// Draw the model
 	bakerhouse.Draw();

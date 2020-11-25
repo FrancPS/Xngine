@@ -24,6 +24,7 @@ public:
 	// ---------- Getters & Setters ---------- //
 	std::vector<ResourceMesh*> GetMeshes() const { return modelMeshes; }
 	std::vector<unsigned int> GetTextures() const { return modelMaterials; }
+	unsigned int GetNumMeshes() const { return numMeshes; }
 
 	void Load(const char* file_name);
 	void UnLoad();
@@ -34,5 +35,7 @@ private:
 	void LoadMeshes(const aiScene* scene);
 	void LoadMaterials(const aiScene* scene, const char* file_name);
 
+
+	friend class WindowProperties;
 };
 #endif // __ResourceModel_H__
