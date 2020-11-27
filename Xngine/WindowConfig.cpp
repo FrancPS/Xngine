@@ -31,7 +31,6 @@ bool WindowConfig::Draw() {
         // Update FPS buffer
     fpsNow = ImGui::GetIO().Framerate;
     fps.push_back(fpsNow);
-    fps.push_back(fpsNow);
 
     char title[55];
     sprintf_s(title, 55, "Application average %.3f ms/frame (%.1f FPS)", 1000.0 / fpsNow, fpsNow);
@@ -44,12 +43,12 @@ bool WindowConfig::Draw() {
     ImGui::PlotHistogram("##Histogram", &fps[0], histNumElements, 0, title, 0.0f, 2000, ImVec2(330, 50));
     
         // Memory soncumption
-    GLint nTotalMemoryInKB = 0;
+    /*GLint nTotalMemoryInKB = 0;
     glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &nTotalMemoryInKB);
     ImGui::Text("%d Mb", nTotalMemoryInKB);
     GLint nCurAvailMemoryInKB = 0;
     glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &nCurAvailMemoryInKB);
-    ImGui::Text("%d Mb", nCurAvailMemoryInKB);
+    ImGui::Text("%d Mb", nCurAvailMemoryInKB);*/
 
     /*forAMD?*GLuint uNoOfGPUs = wglGetGPUIDsAMD(0, 0);
     GLuint* uGPUIDs = new GLuint[uNoOfGPUs];

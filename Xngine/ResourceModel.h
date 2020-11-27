@@ -27,13 +27,14 @@ public:
 	unsigned int GetNumMeshes() const { return numMeshes; }
 
 	void Load(const char* file_name);
-	void UnLoad();
 	void Draw();
 
 private:
 
 	void LoadMeshes(const aiScene* scene);
 	void LoadMaterials(const aiScene* scene, const char* file_name);
+	void UnLoad();
+	void UnLoadMaterials();
 
 
 	friend class WindowProperties;

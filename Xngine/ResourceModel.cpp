@@ -33,35 +33,23 @@ void ResourceModel::Load(const char* file_name)
 	scene = aiImportFile(file_name, aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene)
 	{
-		LOG("Scene loaded correctly");
-		
+		UnLoad();
+		LOG("NO HAURIA");
 		LoadMaterials(scene, file_name);
 		LoadMeshes(scene);
+
+		LOG("Scene loaded correctly");
 	}
 	else
 	{
-		LOG("Error loading %s: %s", file_name, aiGetErrorString());
+		// the file was not a model, but it can be a texture!
+		UnLoadMaterials();
+		unsigned int texID = App->textures->LoadTexture(file_name, file_name);
+		if (texID)
+			modelMaterials.push_back(texID);
+		else
+			LOG("Error loading %s: %s", file_name, aiGetErrorString());
 	}
-}
-
-void ResourceModel::UnLoad()
-{
-	LOG("Unloading the current module");
-	unsigned int i;
-	// destroy objects from mesh list
-	for (i = 0; i < modelMeshes.size(); i++)
-	{
-		delete modelMeshes[i];
-	}
-	numMeshes = 0;
-	modelMeshes.clear();
-
-	// erase modelMaterials
-	for (i = 0; i < modelMaterials.size(); i++)
-	{
-		glDeleteTextures(1, &modelMaterials[i]);
-	}
-	modelMaterials.clear();
 }
 
 void ResourceModel::LoadMaterials(const aiScene* scene, const char* file_name)
@@ -95,4 +83,27 @@ void ResourceModel::Draw() {
 	for (unsigned int i = 0; i < numMeshes; ++i) {
 		modelMeshes[i]->Draw(modelMaterials);
 	}
+}
+
+void ResourceModel::UnLoad()
+{
+	LOG("Unloading the current module");
+	// destroy objects from mesh list
+	for (unsigned int i = 0; i < modelMeshes.size(); i++)
+	{
+		delete modelMeshes[i];
+	}
+	numMeshes = 0;
+	modelMeshes.clear();
+
+	// erase modelMaterials
+	UnLoadMaterials();
+}
+
+void ResourceModel::UnLoadMaterials() {
+	for (unsigned int i = 0; i < modelMaterials.size(); i++)
+	{
+		glDeleteTextures(1, &modelMaterials[i]);
+	}
+	modelMaterials.clear();
 }

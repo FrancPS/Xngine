@@ -127,7 +127,6 @@ void ModuleRender::ReceiveEvent(const Event& event)
 		break;
 	case Event::file_dropped:
 		LOG("A file has been dropped %s", event.string.ptr);
-		bakerhouse->UnLoad();
 		bakerhouse->Load(event.string.ptr);
 	}
 }

@@ -84,7 +84,7 @@ public:
 
         // NOTE: Could also use glBufferData to take advantage of the buffer orphaning trick...
         glBindBuffer(GL_ARRAY_BUFFER, linePointVBO);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, count * sizeof(dd::DrawVertex), lines);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, count * sizeof(dd::DrawVertex), lines);  //ERROR! THE ERROR IS HERE
 
         // Issue the draw call:
         glDrawArrays(GL_LINES, 0, count);
