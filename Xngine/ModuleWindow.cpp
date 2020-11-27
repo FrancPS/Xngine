@@ -1,16 +1,9 @@
-#include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
 
-ModuleWindow::ModuleWindow()
-{
-	fullscreen = FULLSCREEN;
-	borderless = BORDERLESS;
-}
+ModuleWindow::ModuleWindow() {}
 
-ModuleWindow::~ModuleWindow()
-{
-}
+ModuleWindow::~ModuleWindow() {}
 
 #pragma region 	// ----------- Module Functions ---------- //
 bool ModuleWindow::Init()

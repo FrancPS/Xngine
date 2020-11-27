@@ -10,9 +10,9 @@ class ModuleTexture : public Module
 {
 public:
 	// This is valid because we are loading only one texture!
-	unsigned int texWidth;
-	unsigned int texHeight;
-	unsigned int textureID;
+	unsigned int texWidth	= 0;
+	unsigned int texHeight	= 0;
+	unsigned int textureID	= 0;
 
 public:
 

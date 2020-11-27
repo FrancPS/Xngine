@@ -8,7 +8,6 @@
 
 class WindowConfig;
 class WindowConsole;
-class WindowMenu;
 class WindowProperties;
 
 
@@ -18,10 +17,11 @@ class ModuleEditor : public Module
 private:
 	WindowConfig*		winConfig		= nullptr;
 	WindowConsole*		winConsole		= nullptr;
-	WindowMenu*			winMenu			= nullptr;
 	WindowProperties*	winProperties	= nullptr;
 
 	std::list<Window*> windows;
+
+	bool menuQuitSelected = false;
 
 public:
 
@@ -38,5 +38,10 @@ public:
 private:
 
 	void Draw();
+	bool ShowMainMenu();
+	void ShowMenuFile();
+
+
+	friend class WindowMenu;		// is this better than a getter for each win* ?
 };
 #endif // __ModuleEditor_H__

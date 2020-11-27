@@ -5,10 +5,9 @@
 
 
 //Dubtes MARC: ---------
-// quan Carrego 3 objectes peta
-// ResourceTexture as a static function?
-// What do we put in configuration settings?
-// com posar un deltatime global? (A app? entre quins updates?)
+
+//TODO
+// variable initalisations
 
 enum main_states
 {

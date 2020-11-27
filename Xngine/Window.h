@@ -6,6 +6,9 @@
 class Window
 {
 public:
+	bool isDisplayed = true;
+
+public:
 
 	Window()
 	{

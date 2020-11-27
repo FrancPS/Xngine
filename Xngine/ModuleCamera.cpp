@@ -8,18 +8,9 @@
 #include "SDL.h"
 #include "GL/glew.h"
 
-// Constructor
-ModuleCamera::ModuleCamera()
-{
-	deltaTime = 0;
-	mTicks = 0;
-	mTicksCount = 0;
-}
+ModuleCamera::ModuleCamera() {}
 
-// Destructor
-ModuleCamera::~ModuleCamera()
-{
-}
+ModuleCamera::~ModuleCamera() {}
 
 #pragma region // ----------- Module Functions ---------- //
 bool ModuleCamera::Init()

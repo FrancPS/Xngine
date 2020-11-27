@@ -5,11 +5,12 @@
 #include <vector>
 
 WindowProperties::WindowProperties() {
-    model = &App->renderer->bakerhouse; //this is hardcoded
-   
 }
 
 bool WindowProperties::Draw() {
+
+    static ResourceModel* model = App->renderer->bakerhouse; //this is hardcoded
+
     ImGui::Begin("PROPERTIES");
 
     /*properties window with three sections: transformation, geometry and texture. All should give

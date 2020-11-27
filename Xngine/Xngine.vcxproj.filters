@@ -11,7 +11,6 @@
     <ClCompile Include="ModuleEditor.cpp" />
     <ClCompile Include="ResourceMesh.cpp" />
     <ClCompile Include="ResourceModel.cpp" />
-    <ClCompile Include="ResourceTexture.cpp" />
     <ClCompile Include="ResourceProgram.cpp" />
     <ClCompile Include="externalLibs\imgui-docking\imgui_demo.cpp">
       <Filter>imgui</Filter>
@@ -163,7 +162,6 @@
     <ClCompile Include="WindowConsole.cpp" />
     <ClCompile Include="WindowConfig.cpp" />
     <ClCompile Include="WindowProperties.cpp" />
-    <ClCompile Include="WindowMenu.cpp" />
     <ClCompile Include="ModuleTexture.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -178,7 +176,6 @@
     <ClInclude Include="ModuleEditor.h" />
     <ClInclude Include="ResourceMesh.h" />
     <ClInclude Include="ResourceModel.h" />
-    <ClInclude Include="ResourceTexture.h" />
     <ClInclude Include="ResourceProgram.h" />
     <ClInclude Include="externalLibs\imgui-docking\imgui.h">
       <Filter>imgui</Filter>
@@ -446,7 +443,6 @@
     <ClInclude Include="WindowConsole.h" />
     <ClInclude Include="WindowConfig.h" />
     <ClInclude Include="WindowProperties.h" />
-    <ClInclude Include="WindowMenu.h" />
     <ClInclude Include="ModuleTexture.h" />
   </ItemGroup>
   <ItemGroup>

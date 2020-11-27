@@ -7,12 +7,8 @@
 class WindowProperties : public Window
 {
 public:
-	ResourceModel* model;
-
-public:
 	
 	WindowProperties();
 	bool Draw();
-	//bool CleanUp();
 };
 #endif // __WindowProperties_H__

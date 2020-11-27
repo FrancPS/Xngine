@@ -15,11 +15,9 @@ ModuleInput::ModuleInput()
 	keyboard = new KeyState[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KeyState) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(KeyState) * NUM_MOUSE_BUTTONS);
-	wheel = 0;
 }
 
-ModuleInput::~ModuleInput()
-{}
+ModuleInput::~ModuleInput() {}
 
 #pragma region // ----------- Module Functions ---------- //
 bool ModuleInput::Init()
@@ -48,7 +46,7 @@ update_status ModuleInput::PreUpdate()
 	bool imguiHasInputs = io.WantCaptureMouse || io.WantCaptureKeyboard;
 
 	// ----- KEYBOARD ----- //
-	if (!imguiHasInputs)
+	if (!imguiHasInputs)		// TODO: ESC not detected if render is not focused
 	{
 		const Uint8* keys = SDL_GetKeyboardState(NULL);
 		for (int i = 0; i < MAX_KEYS; ++i)
@@ -83,19 +81,10 @@ update_status ModuleInput::PreUpdate()
 	// ----- MOUSE AND WINDOW ----- //
 	while (SDL_PollEvent(&event) != 0)
 	{
-		// Hardcoded Imgui events
-		if (imguiHasInputs) {
-			ImGui_ImplSDL2_ProcessEvent(&event);
-			return UPDATE_CONTINUE;
-		}
-
-		switch (event.type)
-		{
-		case SDL_QUIT:
+		if (event.type == SDL_QUIT)
 			windowEvents[WE_QUIT] = true;
-			break;
 
-		case SDL_WINDOWEVENT:
+		if (event.type == SDL_WINDOWEVENT) {
 			switch (event.window.event)
 			{
 				//case SDL_WINDOWEVENT_LEAVE:
@@ -120,32 +109,41 @@ update_status ModuleInput::PreUpdate()
 				App->BroadcastEvent(ev);
 				break;
 			}
-			break;
+		}
 
-		case SDL_MOUSEBUTTONDOWN:
-			mouse_buttons[event.button.button - 1] = KEY_DOWN;
-			break;
+		// Hardcoded Imgui events vs Input events
+		if (imguiHasInputs) {
+			ImGui_ImplSDL2_ProcessEvent(&event);
+		}
+		else
+		{
+			switch (event.type)
+			{
+			case SDL_MOUSEBUTTONDOWN:
+				mouse_buttons[event.button.button - 1] = KEY_DOWN;
+				break;
 
-		case SDL_MOUSEBUTTONUP:
-			mouse_buttons[event.button.button - 1] = KEY_UP;
-			break;
+			case SDL_MOUSEBUTTONUP:
+				mouse_buttons[event.button.button - 1] = KEY_UP;
+				break;
 
-		case SDL_MOUSEMOTION:
-			mouse_motion.x = event.motion.xrel;
-			mouse_motion.y = event.motion.yrel;
-			mouse.x = event.motion.x;
-			mouse.y = event.motion.y;
-			break;
+			case SDL_MOUSEMOTION:
+				mouse_motion.x = event.motion.xrel;
+				mouse_motion.y = event.motion.yrel;
+				mouse.x = event.motion.x;
+				mouse.y = event.motion.y;
+				break;
 
-		case SDL_MOUSEWHEEL:
-			wheel = (float)event.wheel.y;
-			break;
-		case SDL_DROPFILE:      // In case if dropped file
-			Event ev(Event::file_dropped);
-			ev.string.ptr = event.drop.file;
-			App->BroadcastEvent(ev);
-			SDL_free(event.drop.file);
-			break;
+			case SDL_MOUSEWHEEL:
+				wheel = (float)event.wheel.y;
+				break;
+			case SDL_DROPFILE:      // In case if dropped file
+				Event ev(Event::file_dropped);
+				ev.string.ptr = event.drop.file;
+				App->BroadcastEvent(ev);
+				SDL_free(event.drop.file);
+				break;
+			}
 		}
 	}
 

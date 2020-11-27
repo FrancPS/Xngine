@@ -10,10 +10,10 @@ class ResourceModel
 
 private:
 
-	std::vector<ResourceMesh*>	modelMeshes;
 	unsigned int				numMeshes = 0;
-	std::vector<unsigned int>	modelMaterials;
+	std::vector<ResourceMesh*>	modelMeshes;
 	// we only use 1 material for now
+	std::vector<unsigned int>	modelMaterials;
 
 
 public:

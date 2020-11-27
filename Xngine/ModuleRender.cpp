@@ -42,10 +42,7 @@ void __stdcall OurOpenGLErrorFunction(GLenum source, GLenum type, GLuint id, GLe
 	LOG("<Source:%s> <Type:%s> <Severity:%s> <ID:%d> <Message:%s>\n", tmp_source, tmp_type, tmp_severity, id, message);
 }
 
-ModuleRender::ModuleRender() {
-	backgroundColor = float4(0.1f, 0.1f, 0.1f, 1.0f);
-	gridColor = float4(0.9f, 0.1f, 0.1f, 1.0f);
-}
+ModuleRender::ModuleRender() {}
 
 // Destructor
 ModuleRender::~ModuleRender() {}
@@ -78,7 +75,7 @@ bool ModuleRender::Init()
 	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, true);
 # endif
 
-	bakerhouse.Load("BakerHouse.fbx");
+	bakerhouse->Load("BakerHouse.fbx");
 
 	return true;
 }
@@ -98,7 +95,7 @@ update_status ModuleRender::Update()
 	App->debug_draw->Draw(App->camera->GetViewMatrix(), App->camera->GetProjectionMatrix(), w, h, gridColor.xyz());
 
 	// Draw the model
-	bakerhouse.Draw();
+	bakerhouse->Draw();
 	return UPDATE_CONTINUE;
 }
 
@@ -114,6 +111,8 @@ bool ModuleRender::CleanUp()
 {
 	LOG("Destroying renderer");
 	SDL_GL_DeleteContext(this->context);
+	delete bakerhouse;
+	bakerhouse = nullptr;
 	return true;
 }
 
@@ -128,8 +127,8 @@ void ModuleRender::ReceiveEvent(const Event& event)
 		break;
 	case Event::file_dropped:
 		LOG("A file has been dropped %s", event.string.ptr);
-		bakerhouse.UnLoad();
-		bakerhouse.Load(event.string.ptr);
+		bakerhouse->UnLoad();
+		bakerhouse->Load(event.string.ptr);
 	}
 }
 #pragma endregion

@@ -8,20 +8,19 @@
 class WindowConfig : public Window
 {
 private:
-	float fpsNow;
+	float fpsNow = 0.f;
 	std::vector<float> fps;
-	int histNumElements;
+	int histNumElements	= 50;
 
 	// Should not go here!
-	int vIL;
-	int vILU;
-	int vILUT;
+	int vIL		= 0;
+	int vILU	= 0;
+	int vILUT	= 0;
 
 public:
 
 	WindowConfig();
 	bool Draw();
-	//bool CleanUp();
 
 private:
 

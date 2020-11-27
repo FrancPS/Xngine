@@ -1,6 +1,7 @@
 #ifndef __ModuleWindow_H__
 #define __ModuleWindow_H__
 
+#include "Globals.h"
 #include "Module.h"
 #include "Event.h"
 #include "SDL.h"
@@ -12,16 +13,16 @@ class ModuleWindow : public Module
 
 public:
 
-	SDL_Window* window = NULL;			//The window we'll be rendering to
-	SDL_Surface* screen_surface = NULL;	//The surface contained by the window
+	SDL_Window* window			= nullptr;	//The window we'll be rendering to
+	SDL_Surface* screen_surface = nullptr;	//The surface contained by the window
 
 private:
-	int		width;
-	int		height;
-	bool	fullscreen;
-	int		fullwidth;
-	int		fullheight;
-	bool	borderless;
+	int		width	= 0;
+	int		height	= 0;
+	int		fullwidth	= 0;
+	int		fullheight	= 0;
+	bool	fullscreen = FULLSCREEN;
+	bool	borderless = BORDERLESS;
 
 public:
 

@@ -6,7 +6,6 @@
 #include "ModuleRender.h"
 #include "WindowConfig.h"
 #include "WindowConsole.h"
-#include "WindowMenu.h"
 #include "WindowProperties.h"
 #include "SDL.h"
 #include "GL/glew.h"
@@ -16,20 +15,17 @@
 
 
 ModuleEditor::ModuleEditor() {
+    windows.push_back(winConfig = new WindowConfig());
+    windows.push_back(winConsole = new WindowConsole());
+    windows.push_back(winProperties = new WindowProperties());
 }
-ModuleEditor::~ModuleEditor() {
-}
+ModuleEditor::~ModuleEditor() {}
 
 #pragma region // ----------- Module Functions ---------- //
 bool ModuleEditor::Init() {
 	ImGui::CreateContext();
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer->GetContext());
 	ImGui_ImplOpenGL3_Init();
-
-	windows.push_back(winConfig		= new WindowConfig());
-	windows.push_back(winConsole	= new WindowConsole());
-	windows.push_back(winMenu		= new WindowMenu());
-	windows.push_back(winProperties = new WindowProperties());
 
 	return true;
 }
@@ -48,8 +44,10 @@ update_status ModuleEditor::Update() {
 	Draw();
 
 	ImGui::Render();
-
-	return UPDATE_CONTINUE;
+    if (menuQuitSelected)
+        return UPDATE_STOP;
+    else
+	    return UPDATE_CONTINUE;
 }
 
 update_status ModuleEditor::PostUpdate() {
@@ -70,6 +68,111 @@ bool ModuleEditor::CleanUp() {
 #pragma endregion
 
 void ModuleEditor::Draw() {
-	for (std::list<Window*>::iterator it = windows.begin(); it != windows.end(); ++it)
-		(*it)->Draw();
+    ShowMainMenu();
+	for (std::list<Window*>::iterator it = windows.begin(); it != windows.end(); ++it) {
+		if ((*it)->isDisplayed)
+			(*it)->Draw();
+	}
+}
+
+bool ModuleEditor::ShowMainMenu() {
+    // Menu Bar
+    if (ImGui::BeginMainMenuBar())
+    {
+        if (ImGui::BeginMenu("File"))
+        {
+            ShowMenuFile();
+            ImGui::EndMenu();
+        }
+        if (ImGui::BeginMenu("Edit"))
+        {
+            if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+            if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
+            ImGui::Separator();
+            if (ImGui::MenuItem("Cut", "CTRL+X")) {}
+            if (ImGui::MenuItem("Copy", "CTRL+C")) {}
+            if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("Layout"))
+        {
+            ImGui::MenuItem("Properties",       NULL, &winProperties->isDisplayed);
+            ImGui::MenuItem("Configuration",    NULL, &winConfig->isDisplayed);
+            ImGui::MenuItem("Console",          NULL, &winConsole->isDisplayed);
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("About"))
+        {
+            ImGui::EndMenu();
+        }
+        ImGui::EndMainMenuBar();
+    }
+    return true;
+}
+
+// Note that shortcuts are currently provided for display only
+// (future version will add explicit flags to BeginMenu() to request processing shortcuts)
+void ModuleEditor::ShowMenuFile()
+{
+    ImGui::MenuItem("(demo menu)", NULL, false, false);
+    ImGui::MenuItem("Only QUIT option is actually working!", NULL, false, false);
+    if (ImGui::MenuItem("New")) {}
+    if (ImGui::MenuItem("Open", "Ctrl+O")) {}
+    if (ImGui::BeginMenu("Open Recent"))
+    {
+        ImGui::MenuItem("fish_hat.c");
+        ImGui::MenuItem("fish_hat.inl");
+        ImGui::MenuItem("fish_hat.h");
+        if (ImGui::BeginMenu("More.."))
+        {
+            ImGui::MenuItem("Hello");
+            ImGui::MenuItem("Sailor");
+            if (ImGui::BeginMenu("Recurse.."))
+            {
+                ShowMenuFile();
+                ImGui::EndMenu();
+            }
+            ImGui::EndMenu();
+        }
+        ImGui::EndMenu();
+    }
+    if (ImGui::MenuItem("Save", "Ctrl+S")) {}
+    if (ImGui::MenuItem("Save As..")) {}
+
+    ImGui::Separator();
+    if (ImGui::BeginMenu("Options"))
+    {
+        static bool enabled = true;
+        ImGui::MenuItem("Enabled", "", &enabled);
+        ImGui::BeginChild("child", ImVec2(0, 60), true);
+        for (int i = 0; i < 10; i++)
+            ImGui::Text("Scrolling Text %d", i);
+        ImGui::EndChild();
+        static float f = 0.5f;
+        static int n = 0;
+        ImGui::SliderFloat("Value", &f, 0.0f, 1.0f);
+        ImGui::InputFloat("Input", &f, 0.1f);
+        ImGui::Combo("Combo", &n, "Yes\0No\0Maybe\0\0");
+        ImGui::EndMenu();
+    }
+
+    if (ImGui::BeginMenu("Colors"))
+    {
+        float sz = ImGui::GetTextLineHeight();
+        for (int i = 0; i < ImGuiCol_COUNT; i++)
+        {
+            const char* name = ImGui::GetStyleColorName((ImGuiCol)i);
+            ImVec2 p = ImGui::GetCursorScreenPos();
+            ImGui::GetWindowDrawList()->AddRectFilled(p, ImVec2(p.x + sz, p.y + sz), ImGui::GetColorU32((ImGuiCol)i));
+            ImGui::Dummy(ImVec2(sz, sz));
+            ImGui::SameLine();
+            ImGui::MenuItem(name);
+        }
+        ImGui::EndMenu();
+    }
+
+    ImGui::Separator();
+    if (ImGui::MenuItem("Quit Application", "ESC")) { menuQuitSelected = true; }
 }

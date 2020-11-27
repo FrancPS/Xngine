@@ -5,14 +5,9 @@
 #include "SDL.h"
 #include "GL/glew.h"
 
-ResourceProgram::ResourceProgram()
-{
-}
+ResourceProgram::ResourceProgram() {}
 
-// Destructor
-ResourceProgram::~ResourceProgram()
-{
-}
+ResourceProgram::~ResourceProgram() {}
 
 char* ResourceProgram::LoadShaderSource(const char* shader_file_name)
 {

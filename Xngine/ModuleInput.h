@@ -32,9 +32,9 @@ private:
 	bool		windowEvents[WE_COUNT];
 	KeyState*	keyboard;
 	KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
-	iPoint		mouse_motion;
-	iPoint		mouse;
-	float		wheel;
+	iPoint		mouse_motion = { 0, 0 };
+	iPoint		mouse		 = { 0, 0 };
+	float		wheel		 = 0;
 
 
 public:
@@ -61,6 +61,5 @@ public:
 	const iPoint& GetMouseMotion() const		{ return mouse_motion; }
 	const iPoint& GetMousePosition() const		{ return mouse; }
 	const float& GetMouseWheel() const			{ return wheel; }
-
 };
 #endif // __ModuleInput_H__

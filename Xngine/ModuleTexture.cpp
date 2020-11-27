@@ -22,8 +22,6 @@ std::string ModuleTexture::getPathName(const std::string& s) {
 
 
 ModuleTexture::ModuleTexture() {
-	texWidth = 0;
-	texHeight = 0;
 }
 
 ModuleTexture::~ModuleTexture()

@@ -1,7 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ResourceModel.h"
-#include "ResourceTexture.h"
 #include "ResourceMesh.h"
 #include "ModuleTexture.h"
 #include "assimp/scene.h"
@@ -10,9 +9,7 @@
 #include "GL/glew.h"
 
 
-ResourceModel::ResourceModel() {
-
-}
+ResourceModel::ResourceModel() {}
 
 ResourceModel::~ResourceModel() {
 	unsigned int i;

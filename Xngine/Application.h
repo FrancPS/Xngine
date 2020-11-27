@@ -30,7 +30,7 @@ public:
 
 	// Hardware information //
 	// in ModuleWindow.h
-	int		systemRAM = 0;
+	int		systemRAM		= 0;
 	int		cpuCores		= 0;
 	int		cpuCacheSize	= 0;
 	bool	hasAVX		= false;
@@ -46,9 +46,9 @@ public:
 	const char* gpu;
 
 	// Software
-	char vSDL[10];
-	const char* vOpenGL;
-	const char* vGlew;
+	char vSDL[10]{};
+	const char* vOpenGL	= nullptr;
+	const char* vGlew	= nullptr;
 
 private:
 

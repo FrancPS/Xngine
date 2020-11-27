@@ -16,12 +16,12 @@ class ModuleRender : public Module
 {
 
 public:
-	ResourceModel bakerhouse; //Must be public for WindowProperties. This is hardcoded, so nevermind
-	float4 backgroundColor;
-	float4 gridColor;
+	ResourceModel* bakerhouse = new ResourceModel(); //Must be public for WindowProperties. This is hardcoded, so nevermind
+	float4 backgroundColor	= float4(0.1f, 0.1f, 0.1f, 1.0f);
+	float4 gridColor		= float4(1.f, 1.f, 1.f, 1.f);
 
 private:
-	void* context;
+	void* context = nullptr;
 
 public:
 

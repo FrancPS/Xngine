@@ -237,13 +237,11 @@
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ResourceProgram.h" />
     <ClInclude Include="ModuleRender.h" />
-    <ClInclude Include="ResourceTexture.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="WindowConfig.h" />
     <ClInclude Include="WindowConsole.h" />
-    <ClInclude Include="WindowMenu.h" />
     <ClInclude Include="WindowProperties.h" />
   </ItemGroup>
   <ItemGroup>
@@ -307,11 +305,9 @@
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ResourceProgram.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
-    <ClCompile Include="ResourceTexture.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="WindowConfig.cpp" />
     <ClCompile Include="WindowConsole.cpp" />
-    <ClCompile Include="WindowMenu.cpp" />
     <ClCompile Include="WindowProperties.cpp" />
   </ItemGroup>
   <ItemGroup>

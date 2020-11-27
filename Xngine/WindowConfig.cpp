@@ -7,6 +7,7 @@
 #include "MathGeoLib.h"
 
 #include "GL/glew.h"
+#include "GL/wglew.h"
 // TODO: Textures is a class with only a static function.
 // It doesnt initialise DevIL at start, but when a load is requested!
 #include "IL/il.h"
@@ -15,13 +16,10 @@
 
 
 WindowConfig::WindowConfig() {
-    fpsNow = 0;
-    histNumElements = 50;
-    
     // TODO: Should not go here!
-    vIL = ilGetInteger(IL_VERSION_NUM);
-    vILU = ilGetInteger(ILU_VERSION_NUM);
-    vILUT = ilGetInteger(ILUT_VERSION_NUM);
+    vIL     = ilGetInteger(IL_VERSION_NUM);
+    vILU    = ilGetInteger(ILU_VERSION_NUM);
+    vILUT   = ilGetInteger(ILUT_VERSION_NUM);
 }
 
 
@@ -45,6 +43,28 @@ bool WindowConfig::Draw() {
         // Plot Hist
     ImGui::PlotHistogram("##Histogram", &fps[0], histNumElements, 0, title, 0.0f, 2000, ImVec2(330, 50));
     
+        // Memory soncumption
+    GLint nTotalMemoryInKB = 0;
+    glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &nTotalMemoryInKB);
+    ImGui::Text("%d Mb", nTotalMemoryInKB);
+    GLint nCurAvailMemoryInKB = 0;
+    glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &nCurAvailMemoryInKB);
+    ImGui::Text("%d Mb", nCurAvailMemoryInKB);
+
+    /*forAMD?*GLuint uNoOfGPUs = wglGetGPUIDsAMD(0, 0);
+    GLuint* uGPUIDs = new GLuint[uNoOfGPUs];
+    wglGetGPUIDsAMD(uNoOfGPUs, uGPUIDs);
+
+    GLuint uTotalMemoryInMBAMD = 0;
+    wglGetGPUInfoAMD(uGPUIDs[0], WGL_GPU_RAM_AMD, GL_UNSIGNED_INT, sizeof(GLuint), &uTotalMemoryInMBAMD);
+
+    GLint nCurAvailMemoryInKBAMD = 0;
+    glGetIntegerv(GL_TEXTURE_FREE_MEMORY_ATI, &nCurAvailMemoryInKBAMD);
+
+    ImGui::Text("%d Mb", uTotalMemoryInMBAMD);
+    ImGui::Text("%d Mb", nCurAvailMemoryInKBAMD);**/
+
+
     // ----- WINDOW CONFIG ----- //
     if (ImGui::CollapsingHeader("Window Configuration"))
     {
