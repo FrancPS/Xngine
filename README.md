@@ -29,3 +29,12 @@ Francesc Porta Solsona ([FrancPS](https://github.com/FrancPS))
 - Inputs from imgui and SDL are controlled and processed depending on whether the mouse is hovering an imgui window.
 - It has been developed with lots of love and passion.
 ### Additional comments for the teacher to understand some part of the engine
+I have encountered an error that generates when you Drag&Drop a new model the second time (so when doing two drag&drops, on the second).
+(Note it will only appear in Debug mode)
+The error is encounterd by 'glDebugMessageCallback' and prints as this:
+'ModuleRender.cpp(42) : <Source:API> <Type:Error> <Severity:high> <ID:1281> <Message:Error has been generated. GL error GL_INVALID_VALUE in (null): (ID: 173538523) Generic error>'
+
+By debugging, I have found that it originates in *ModuleDebugDraw.cpp*, explicitly in line:
+'87: glBufferSubData(GL_ARRAY_BUFFER, 0, count * sizeof(dd::DrawVertex), lines);'
+
+Since we are probably not going to use debug-draw in the future, and the program still runs properly, i decided to ignore this message.
