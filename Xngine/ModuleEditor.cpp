@@ -40,8 +40,10 @@ update_status ModuleEditor::PreUpdate() {
 
 update_status ModuleEditor::Update() {
 	
-	ImGui::ShowDemoWindow();
 	Draw();
+
+    if (aboutWindowShow)
+        ShowAboutWindow();
 
 	ImGui::Render();
     if (menuQuitSelected)
@@ -105,6 +107,11 @@ bool ModuleEditor::ShowMainMenu() {
 
         if (ImGui::BeginMenu("About"))
         {
+            if (ImGui::MenuItem("Github Page...")) { ShellExecute(NULL, "open", "https://github.com/FrancPS/Xngine", NULL, NULL, SW_SHOWNORMAL); }
+            if (ImGui::MenuItem("Download Latest...")) { ShellExecute(NULL, "open", "https://github.com/FrancPS/Xngine/releases", NULL, NULL, SW_SHOWNORMAL); }
+            ImGui::Separator();
+            if (ImGui::MenuItem("About", NULL, aboutWindowShow)) { aboutWindowShow = !aboutWindowShow; }
+
             ImGui::EndMenu();
         }
         ImGui::EndMainMenuBar();
@@ -112,8 +119,6 @@ bool ModuleEditor::ShowMainMenu() {
     return true;
 }
 
-// Note that shortcuts are currently provided for display only
-// (future version will add explicit flags to BeginMenu() to request processing shortcuts)
 void ModuleEditor::ShowMenuFile()
 {
     ImGui::MenuItem("(demo menu)", NULL, false, false);
@@ -175,4 +180,10 @@ void ModuleEditor::ShowMenuFile()
 
     ImGui::Separator();
     if (ImGui::MenuItem("Quit Application", "ESC")) { menuQuitSelected = true; }
+}
+
+void ModuleEditor::ShowAboutWindow() {
+    ImGui::Begin("ABOUT");
+    ImGui::TextWrapped("THIS IS THE ABOUT WINDOW.\nI don't know what to put in here so I will just write some random stuff, like my name:\n Francesc Porta Solsona\nAnd so on we could write here the specifications of the engine and other stuff!");
+    ImGui::End();
 }

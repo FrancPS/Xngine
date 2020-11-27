@@ -22,6 +22,7 @@ private:
 	std::list<Window*> windows;
 
 	bool menuQuitSelected = false;
+	bool aboutWindowShow = false;
 
 public:
 
@@ -40,6 +41,7 @@ private:
 	void Draw();
 	bool ShowMainMenu();
 	void ShowMenuFile();
+	void ShowAboutWindow();
 
 
 	friend class WindowMenu;		// is this better than a getter for each win* ?
