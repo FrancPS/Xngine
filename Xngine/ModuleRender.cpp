@@ -89,6 +89,7 @@ update_status ModuleRender::PreUpdate()
 
 update_status ModuleRender::Update()
 {
+	LOG("%f,%f,%f", bakerhouse->sizeX, bakerhouse->sizeY, bakerhouse->sizeZ);
 	// Draw the grid and origin
 	int w, h;
 	SDL_GetWindowSize(App->window->window, &w, &h);
@@ -128,6 +129,7 @@ void ModuleRender::ReceiveEvent(const Event& event)
 	case Event::file_dropped:
 		LOG("A file has been dropped %s", event.string.ptr);
 		bakerhouse->Load(event.string.ptr);
+		break;
 	}
 }
 #pragma endregion

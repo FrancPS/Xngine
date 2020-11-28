@@ -31,6 +31,7 @@ public:
 	update_status	Update();
 	update_status	PostUpdate();
 	bool			CleanUp();
+	void			ReceiveEvent(const Event& event);
 
 	// ---------- Getters & Setters ---------- //
 	float4x4	GetProjectionMatrix() const	{ return this->projectionMatrix; };
@@ -57,6 +58,8 @@ private:
 	void Pitch(const float _speed);
 	void Yaw(const float _speed);
 	void Orbit(const float _speedFront, const float _speedUp, const float3 focusPos);
+
+	void Focus();
 
 };
 #endif // __ModuleCamera_H__

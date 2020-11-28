@@ -18,6 +18,9 @@ public:
 	unsigned int ebo = 0;
 	unsigned int vao = 0;
 
+	float maxX = 0, maxY = 0, maxZ = 0;
+	float minX = 3.40282e+038, minY = 3.40282e+038,  minZ = 3.40282e+038; // MAXFLOAT*
+
 private:
 
 	unsigned int shaderProgram = 0;

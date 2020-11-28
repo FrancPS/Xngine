@@ -1,7 +1,7 @@
 #include "Application.h"
+#include "WindowProperties.h"
 #include "ModuleRender.h"// for bakerhouse
 #include "ModuleTexture.h"
-#include "WindowProperties.h"
 #include <vector>
 
 WindowProperties::WindowProperties() {
@@ -19,6 +19,10 @@ read-only information about the current loaded meshes and texture (triangle coun
         ImGui::TextUnformatted("It's always [0,0,0]");
     }
     if (ImGui::CollapsingHeader("Geometry")) {
+        float modelWidth     = App->renderer->bakerhouse->sizeX;
+        float modelHeight    = App->renderer->bakerhouse->sizeY;    // why if these are static the size doesnt change?
+        float modelDepth     = App->renderer->bakerhouse->sizeZ;
+        ImGui::Text("Model BB size:\nWidth: %.2f, Height: %.2f, Depth: %.2f", modelWidth, modelHeight, modelDepth);
         for (unsigned int i = 0; i < model->GetNumMeshes(); ++i) {
             ImGui::Text("Mesh %d Num Vertices: %d", i, model->GetMeshes()[i]->numVertex);
         }

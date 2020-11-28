@@ -2,6 +2,7 @@
 #define __Module_H__
 
 #include "Globals.h"
+#include "Event.h"
 
 class Application;
 

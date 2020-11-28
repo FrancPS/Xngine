@@ -7,6 +7,10 @@
 
 class ResourceModel
 {
+public:
+	float maxX = 0, maxY = 0, maxZ = 0;
+	float minX = 3.40282e+038, minY = 3.40282e+038, minZ = 3.40282e+038; // MAXFLOAT*
+	float sizeX = 0, sizeY = 0, sizeZ = 0;
 
 private:
 
@@ -35,6 +39,7 @@ private:
 	void LoadMaterials(const aiScene* const scene, const char* const file_name);
 	void UnLoad();
 	void UnLoadMaterials();
+	void ResetSizes();
 
 
 	friend class WindowProperties;

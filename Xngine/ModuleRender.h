@@ -4,7 +4,6 @@
 #include "Globals.h"
 #include "Module.h"
 #include "ResourceModel.h"
-#include "Event.h"
 #include "Math/float4.h"
 #include "Math/float3.h"
 

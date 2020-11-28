@@ -19,18 +19,7 @@ ResourceModel::ResourceModel() {
 }
 
 ResourceModel::~ResourceModel() {
-	unsigned int i;
-	// destroy objects from mesh list
-	for (i = 0; i < modelMeshes.size(); i++)
-	{
-		delete modelMeshes[i];
-		modelMeshes[i] = nullptr;
-	}
-	// erase modelMaterials
-	for (i = 0; i < modelMaterials.size(); i++)
-	{
-		glDeleteTextures(1, &modelMaterials[i]);
-	}
+	UnLoad();
 }
 
 
@@ -83,6 +72,20 @@ void ResourceModel::LoadMeshes(const aiScene* const scene) {
 		modelMeshes.push_back(new ResourceMesh(scene->mMeshes[i]));
 		numMeshes++;
 	}
+	// get total size of all meshes
+	for (unsigned int i = 0; i < modelMeshes.size(); i++)
+	{
+		if (modelMeshes[i]->maxX > maxX) maxX = modelMeshes[i]->maxX;
+		if (modelMeshes[i]->minX < minX) minX = modelMeshes[i]->minX;
+		if (modelMeshes[i]->maxY > maxY) maxY = modelMeshes[i]->maxY;
+		if (modelMeshes[i]->minY < minY) minY = modelMeshes[i]->minY;
+		if (modelMeshes[i]->maxZ > maxZ) maxZ = modelMeshes[i]->maxZ;
+		if (modelMeshes[i]->minZ < minZ) minZ = modelMeshes[i]->minZ;
+	}
+	LOG("%f", sizeX);
+	sizeX = maxX - minX;
+	sizeY = maxY - minY;
+	sizeZ = maxZ - minZ;
 	LOG("Meshes loaded correctly");
 }
 
@@ -105,6 +108,8 @@ void ResourceModel::UnLoad()
 
 	// erase modelMaterials
 	UnLoadMaterials();
+
+	ResetSizes();
 }
 
 void ResourceModel::UnLoadMaterials() {
@@ -113,4 +118,12 @@ void ResourceModel::UnLoadMaterials() {
 		glDeleteTextures(1, &modelMaterials[i]);
 	}
 	modelMaterials.clear();
+}
+
+void ResourceModel::ResetSizes() {
+	LOG("HKJASNDKALSDJNKLAJDNKSJ;DNAKBKJEWHVBLIKJWVLWEKVJnlkvjb");
+	maxX = maxY = maxZ = 0;
+	minX = minY = minZ = 3.40282e+038; // MAXFLOAT*
+	sizeX = sizeY = sizeZ = 0;
+	LOG("%f", maxX);
 }

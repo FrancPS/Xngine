@@ -1,7 +1,8 @@
+#include "Globals.h"
 #include "Application.h"
 #include "ResourceMesh.h"
-#include "Globals.h"
 #include "ResourceProgram.h"
+#include "ResourceModel.h"
 #include "ModuleCamera.h"
 #include "GL/glew.h"
 #include "Math/float4x4.h"
@@ -49,8 +50,15 @@ void ResourceMesh::LoadMeshVBO(const aiMesh* const mesh) {
 		vertexData[pos++] = mesh->mVertices[i].z;
 		vertexData[pos++] = mesh->mTextureCoords[0][i].x;
 		vertexData[pos++] = mesh->mTextureCoords[0][i].y;
-	}
 
+		// get max sizes
+		if (mesh->mVertices[i].x > maxX) maxX = mesh->mVertices[i].x;
+		if (mesh->mVertices[i].x < minX) minX = mesh->mVertices[i].x;
+		if (mesh->mVertices[i].y > maxY) maxY = mesh->mVertices[i].y;
+		if (mesh->mVertices[i].y < minY) minY = mesh->mVertices[i].y;
+		if (mesh->mVertices[i].z > maxZ) maxZ = mesh->mVertices[i].z;
+		if (mesh->mVertices[i].z < minZ) minZ = mesh->mVertices[i].z;
+	}
 	glUnmapBuffer(GL_ARRAY_BUFFER);
 }
 

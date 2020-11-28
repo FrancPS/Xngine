@@ -3,6 +3,7 @@
 #include "ModuleCamera.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
+#include "ModuleRender.h" //for bakerhouse
 #include "Geometry/Frustum.h"
 #include "Math/float3x3.h"
 #include "SDL.h"
@@ -78,11 +79,9 @@ update_status ModuleCamera::Update()
 		MoveYAxisUnit(-1);
 	}
 
+	// F -- Focus
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
-		LookAt(0, 0, 0);
-		// TODO: FUNCTION TO SELECT SPECIFIC OBJECT/coordinates
-		// TODO: Smooth transition
-		// TODO: Should place the camera near the object
+		Focus();
 	}
 	// ----- ROTATION COMMANDS ----- //
 	// KeyUP -- Pitch ++
@@ -133,8 +132,6 @@ update_status ModuleCamera::Update()
 
 	mTicksCount = SDL_GetTicks();	// Update tick counts (deltaTime for next frame)
 
-	//LOG("LOOKING AT: %f,%f,%f", frustum.Front().x, frustum.Front().y, frustum.Front().z);
-
 	return UPDATE_CONTINUE;
 }
 
@@ -152,6 +149,16 @@ bool ModuleCamera::CleanUp()
 	LOG("Destroying camera");
 	
 	return true;
+}
+
+void ModuleCamera::ReceiveEvent(const Event& event)
+{
+	switch (event.type)
+	{
+	case Event::file_dropped:
+		Focus();
+		break;
+	}
 }
 #pragma endregion 
 
@@ -242,3 +249,11 @@ void ModuleCamera::Orbit(const float _speedFront, const float _speedUp, const fl
 }
 
 #pragma endregion
+
+void ModuleCamera::Focus() {
+	// Place the camera near the object
+	SetPosition(App->renderer->bakerhouse->sizeX, App->renderer->bakerhouse->sizeY, App->renderer->bakerhouse->sizeZ);
+	// TODO: FUNCTION TO SELECT SPECIFIC OBJECT/coordinates
+	// TODO: Smooth transition ?
+	LookAt(0, 0, 0);
+}
