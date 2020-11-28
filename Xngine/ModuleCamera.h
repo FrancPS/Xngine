@@ -38,25 +38,25 @@ public:
 	vec			GetPosition() const			{ return frustum.Pos(); }
 	vec			GetOrientation() const		{ return frustum.Front(); }
 
-	void		SetPosition(float _x, float _y, float _z)		{ frustum.SetPos(float3::float3(_x, _y, _z)); }
-	void		SetPlaneDistances(float _zNear, float _zFar)	{ frustum.SetViewPlaneDistances(_zNear, _zFar); }
-	void		SetFOV(unsigned int width, unsigned int height);	// set the horizontal FOV keeping the aspect ratio
+	void		SetPosition(const float _x, const float _y, const float _z)		{ frustum.SetPos(float3::float3(_x, _y, _z)); }
+	void		SetPlaneDistances(const float _zNear, const float _zFar)	{ frustum.SetViewPlaneDistances(_zNear, _zFar); }
+	void		SetFOV(const unsigned int width, const unsigned int height);	// set the horizontal FOV keeping the aspect ratio
 	//void		SetAspectRatio();									// change the vertical FOV to meet the new aspect ratio.
  
 	// ------------ Module Camera ------------ //
-	void LookAt(int _x, int _y, int _z);
+	void LookAt(const int _x, const int _y, const int _z);
 	
 private:
 	// ---------- Camera Traslations --------- //
-	void MoveFrontAxis(float _speed);
-	void MoveRightAxis(float _speed);
-	void MoveUpAxis(float _speed);
-	void MoveYAxisUnit(int upOrDown);								 // Yaws in the absolute Y axis, its less disorienting
+	void MoveFrontAxis(const float _speed);
+	void MoveRightAxis(const float _speed);
+	void MoveUpAxis(const float _speed);
+	void MoveYAxisUnit(const int upOrDown);								 // Yaws in the absolute Y axis, its less disorienting
 
 	// ----------- Camera Rotations ---------- //
-	void Pitch(float _speed);
-	void Yaw(float _speed);
-	void Orbit(float _speedFront, float _speedUp, float3 focusPos);
+	void Pitch(const float _speed);
+	void Yaw(const float _speed);
+	void Orbit(const float _speedFront, const float _speedUp, const float3 focusPos);
 
 };
 #endif // __ModuleCamera_H__

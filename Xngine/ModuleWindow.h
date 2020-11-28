@@ -32,7 +32,7 @@ public:
 	// ----------- Module Functions ---------- //
 	bool Init();
 	bool CleanUp();
-	void ReceiveEvent(const Event& event);
+	void ReceiveEvent(const Event& const event);
 
 	// ---------- Getters & Setters ---------- //
 	float GetAspectRatio() const { return (App->window->width) / (float)(App->window->height); }

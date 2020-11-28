@@ -11,8 +11,8 @@ public:
 	ResourceProgram();
 	~ResourceProgram();
 
-	static char*		LoadShaderSource(const char* shader_file_name);
-	static unsigned int	CompileShader(unsigned type, const char* source);
-	static unsigned	int CreateProgram(unsigned vtx_shader, unsigned frg_shader);
+	static char*		LoadShaderSource(const char* const shader_file_name);
+	static unsigned int	CompileShader(const unsigned int type, const char* const source);
+	static unsigned	int CreateProgram(const unsigned int vtx_shader, const unsigned int frg_shader);
 };
 #endif // __ResourceProgram_H__

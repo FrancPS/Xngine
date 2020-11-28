@@ -46,7 +46,7 @@ bool ModuleTexture::Init() {
 }
 
 
-const unsigned int ModuleTexture::LoadTexture(const char* file_path, const char* mesh_path) {
+const unsigned int ModuleTexture::LoadTexture(const char* const file_path, const char* const mesh_path) {
 	unsigned int imageID;
 
 	ilGenImages(1, &imageID);					// Generation of one image name

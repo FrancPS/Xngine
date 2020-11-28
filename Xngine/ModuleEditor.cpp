@@ -187,6 +187,6 @@ void ModuleEditor::ShowAboutWindow() {
     ImGui::End();
 }
 
-void ModuleEditor::ForwardLog(char* _string) const {
+void ModuleEditor::ForwardLog(const char* const _string) const {
     winConsole->AddLog(_string);
 }

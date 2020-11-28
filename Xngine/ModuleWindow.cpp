@@ -97,7 +97,7 @@ bool ModuleWindow::CleanUp()
 	return true;
 }
 
-void ModuleWindow::ReceiveEvent(const Event& event)
+void ModuleWindow::ReceiveEvent(const Event& const event)
 {
 	switch (event.type)
 	{

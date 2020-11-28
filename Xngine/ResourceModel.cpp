@@ -34,7 +34,7 @@ ResourceModel::~ResourceModel() {
 }
 
 
-void ResourceModel::Load(const char* file_name)
+void ResourceModel::Load(const char* const file_name)
 {
 	const aiScene* scene;
 	scene = aiImportFile(file_name, aiProcessPreset_TargetRealtime_MaxQuality);
@@ -59,7 +59,7 @@ void ResourceModel::Load(const char* file_name)
 	}
 }
 
-void ResourceModel::LoadMaterials(const aiScene* scene, const char* file_name)
+void ResourceModel::LoadMaterials(const aiScene* const scene, const char* const file_name)
 {
 	aiString file;
 	modelMaterials.reserve(scene->mNumMaterials);
@@ -74,7 +74,7 @@ void ResourceModel::LoadMaterials(const aiScene* scene, const char* file_name)
 	LOG("Materials loaded correctly");
 }
 
-void ResourceModel::LoadMeshes(const aiScene* scene) {
+void ResourceModel::LoadMeshes(const aiScene* const scene) {
 	aiString file;
 	modelMeshes.reserve(scene->mNumMeshes);
 	for (unsigned int i = 0; i < scene->mNumMeshes; ++i)

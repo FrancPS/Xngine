@@ -26,13 +26,13 @@ public:
 	std::vector<unsigned int> GetTextures() const { return modelMaterials; }
 	unsigned int GetNumMeshes() const { return numMeshes; }
 
-	void Load(const char* file_name);
+	void Load(const char* const file_name);
 	void Draw();
 
 private:
 
-	void LoadMeshes(const aiScene* scene);
-	void LoadMaterials(const aiScene* scene, const char* file_name);
+	void LoadMeshes(const aiScene* const scene);
+	void LoadMaterials(const aiScene* const scene, const char* const file_name);
 	void UnLoad();
 	void UnLoadMaterials();
 

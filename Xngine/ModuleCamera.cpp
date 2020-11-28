@@ -21,7 +21,7 @@ bool ModuleCamera::Init()
 	frustum.SetViewPlaneDistances(0.1f, 200.0f);
 	frustum.SetHorizontalFovAndAspectRatio((float)DEGTORAD * 90.0f, App->window->GetAspectRatio());
 
-	frustum.SetPos(float3(0, 1, -2));
+	frustum.SetPos(float3(0, 1, -7));
 	frustum.SetFront(float3::unitZ);
 	frustum.SetUp(float3::unitY);
 	
@@ -157,7 +157,7 @@ bool ModuleCamera::CleanUp()
 
 
 #pragma region // ---------- Getters & Setters ---------- //
-void ModuleCamera::SetFOV(unsigned int width, unsigned int height) {
+void ModuleCamera::SetFOV(const unsigned int width, const unsigned int height) {
 	float aspectRatio = width / (float)height;
 	frustum.SetHorizontalFovAndAspectRatio(frustum.HorizontalFov(), aspectRatio);
 }
@@ -165,7 +165,7 @@ void ModuleCamera::SetFOV(unsigned int width, unsigned int height) {
 
 
 #pragma region // ------------ Module Camera ------------ //
-void ModuleCamera::LookAt(int _x, int _y, int _z) {
+void ModuleCamera::LookAt(const int _x, const int _y, const int _z) {
 	float3 targetDir = float3((float)_x, (float)_y, (float)_z) - frustum.Pos();
 	float3x3	rotationMatrix	= float3x3::LookAt(frustum.Front(), targetDir.Normalized(), frustum.Up(), float3::float3(0, 1, 0));
 	vec			oldFront		= frustum.Front();
@@ -177,35 +177,35 @@ void ModuleCamera::LookAt(int _x, int _y, int _z) {
 
 
 #pragma region // ---------- Camera Traslations --------- //
-void ModuleCamera::MoveFrontAxis(float _speed)
+void ModuleCamera::MoveFrontAxis(const float _speed)
 {
 	float4x4 translationM = float4x4::identity;
 	translationM.SetTranslatePart(frustum.Front()* _speed);
 	frustum.SetPos(translationM.TransformPos(frustum.Pos()));
 }
 
-void ModuleCamera::MoveRightAxis(float _speed)
+void ModuleCamera::MoveRightAxis(const float _speed)
 {
 	float4x4 translationM = float4x4::identity;
 	translationM.SetTranslatePart(frustum.WorldRight() * _speed);
 	frustum.SetPos(translationM.TransformPos(frustum.Pos()));
 }
 
-void ModuleCamera::MoveUpAxis(float _speed)
+void ModuleCamera::MoveUpAxis(const float _speed)
 {
 	float4x4 translationM = float4x4::identity;
 	translationM.SetTranslatePart(frustum.Up() * _speed);
 	frustum.SetPos(translationM.TransformPos(frustum.Pos()));
 }
 
-void ModuleCamera::MoveYAxisUnit(int upOrDown) {
+void ModuleCamera::MoveYAxisUnit(const int upOrDown) {
 	frustum.SetPos(frustum.Pos()+float3::float3(0, (float)upOrDown, 0));
 }
 #pragma endregion
 
 
 #pragma region // ----------- Camera Rotations ---------- //
-void ModuleCamera::Pitch(float _speed) {
+void ModuleCamera::Pitch(const float _speed) {
 	float3x3	rotationMatrix = float3x3::RotateAxisAngle(frustum.WorldRight(), _speed);
 	vec			newFront = rotationMatrix * frustum.Front().Normalized();
 	vec			newUp = rotationMatrix * frustum.Up().Normalized();
@@ -216,7 +216,7 @@ void ModuleCamera::Pitch(float _speed) {
 	}
 }
 
-void ModuleCamera::Yaw(float _speed) {
+void ModuleCamera::Yaw(const float _speed) {
 	float3x3	rotationMatrix = float3x3::RotateY(_speed);
 	vec			oldFront = frustum.Front().Normalized();
 	vec			oldUp = frustum.Up().Normalized();
@@ -225,7 +225,7 @@ void ModuleCamera::Yaw(float _speed) {
 	frustum.SetUp((rotationMatrix * oldUp).Normalized());
 }
 
-void ModuleCamera::Orbit(float _speedFront, float _speedUp, float3 focusPos) {
+void ModuleCamera::Orbit(const float _speedFront, const float _speedUp, const float3 focusPos) {
 	// make speed proportional to the distance to the object
 	int x = (int)focusPos.x - (int)frustum.Pos().x;
 	int y = (int)focusPos.y - (int)frustum.Pos().y;

@@ -27,7 +27,7 @@ ResourceMesh::~ResourceMesh() {
 }
 
 
-void ResourceMesh::LoadMeshVBO(const aiMesh* mesh) {
+void ResourceMesh::LoadMeshVBO(const aiMesh* const mesh) {
 	materialIndex = mesh->mMaterialIndex;
 	numVertex = mesh->mNumVertices;
 
@@ -54,7 +54,7 @@ void ResourceMesh::LoadMeshVBO(const aiMesh* mesh) {
 	glUnmapBuffer(GL_ARRAY_BUFFER);
 }
 
-void ResourceMesh::LoadMeshEBO(const aiMesh* mesh) {
+void ResourceMesh::LoadMeshEBO(const aiMesh* const mesh) {
 	numIndices = mesh->mNumFaces * 3;
 	glGenBuffers(1, &ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);

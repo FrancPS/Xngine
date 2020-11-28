@@ -36,7 +36,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	void ForwardLog(char* _string) const;
+	void ForwardLog(const char* const _string) const;
 
 private:
 

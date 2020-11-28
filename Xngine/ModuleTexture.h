@@ -21,7 +21,7 @@ public:
 
 	bool Init();;
 
-	const unsigned int LoadTexture(const char* file_name, const char* mesh_path);
+	const unsigned int LoadTexture(const char* const file_name, const char* const mesh_path);
 
 private:
 	std::string getPathName(const std::string& s);

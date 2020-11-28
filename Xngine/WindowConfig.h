@@ -24,6 +24,6 @@ public:
 
 private:
 
-	const char* PrintCapacitors(std::string &caps) const;
+	const char* PrintCapacitors(std::string& const caps) const;
 };
 #endif // __WindowConfig_H__
