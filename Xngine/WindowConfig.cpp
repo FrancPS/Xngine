@@ -43,7 +43,7 @@ bool WindowConfig::Draw() {
     ImGui::PlotHistogram("##Histogram", &fps[0], histNumElements, 0, title, 0.0f, 2000, ImVec2(330, 50));
     
         // Memory soncumption
-    /*GLint nTotalMemoryInKB = 0;
+   /* GLint nTotalMemoryInKB = 0;
     glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &nTotalMemoryInKB);
     ImGui::Text("%d Mb", nTotalMemoryInKB);
     GLint nCurAvailMemoryInKB = 0;
@@ -61,7 +61,7 @@ bool WindowConfig::Draw() {
     glGetIntegerv(GL_TEXTURE_FREE_MEMORY_ATI, &nCurAvailMemoryInKBAMD);
 
     ImGui::Text("%d Mb", uTotalMemoryInMBAMD);
-    ImGui::Text("%d Mb", nCurAvailMemoryInKBAMD);**/
+    ImGui::Text("%d Mb", nCurAvailMemoryInKBAMD);*/
 
 
     // ----- WINDOW CONFIG ----- //

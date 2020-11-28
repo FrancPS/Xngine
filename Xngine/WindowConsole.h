@@ -5,9 +5,15 @@
 class WindowConsole : public Window
 {
 public:
+	ImGuiTextBuffer     Buf;
+	bool                ScrollToBottom;
 
+	
 	//WindowConsole();
+	void AddLog(const char* fmt, ...);
 	bool Draw();
+
+	void    Clear() { Buf.clear(); }
 	//bool CleanUp();
 };
 #endif // __WindowConsole_H__

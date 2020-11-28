@@ -8,8 +8,15 @@
 #include "assimp/postprocess.h"
 #include "GL/glew.h"
 
+void AssimpCallback(const char* message, char* userData) {
+	if (message) LOG("Assimp Message: %s", message);
+}
 
-ResourceModel::ResourceModel() {}
+ResourceModel::ResourceModel() {
+	struct aiLogStream stream;
+	stream.callback = AssimpCallback;
+	aiAttachLogStream(&stream);
+}
 
 ResourceModel::~ResourceModel() {
 	unsigned int i;
@@ -34,7 +41,7 @@ void ResourceModel::Load(const char* file_name)
 	if (scene)
 	{
 		UnLoad();
-		LOG("NO HAURIA");
+		
 		LoadMaterials(scene, file_name);
 		LoadMeshes(scene);
 

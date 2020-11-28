@@ -187,3 +187,7 @@ void ModuleEditor::ShowAboutWindow() {
     ImGui::TextWrapped("THIS IS THE ABOUT WINDOW.\nI don't know what to put in here so I will just write some random stuff, like my name:\n Francesc Porta Solsona\nAnd so on we could write here the specifications of the engine and other stuff!");
     ImGui::End();
 }
+
+void ModuleEditor::ForwardLog(char* _string) {
+    winConsole->AddLog(_string);
+}
