@@ -15,7 +15,6 @@ std::string ModuleTexture::getPathName(const std::string& s) {
 	if (i != std::string::npos) {
 		return(s.substr(0, i));
 	}
-
 	return("");
 }
 
@@ -47,7 +46,7 @@ bool ModuleTexture::Init() {
 }
 
 
-unsigned int ModuleTexture::LoadTexture(const char* file_path, const char* mesh_path) {
+const unsigned int ModuleTexture::LoadTexture(const char* file_path, const char* mesh_path) {
 	unsigned int imageID;
 
 	ilGenImages(1, &imageID);					// Generation of one image name

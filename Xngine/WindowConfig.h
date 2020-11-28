@@ -10,7 +10,7 @@ class WindowConfig : public Window
 private:
 	float fpsNow = 0.f;
 	std::vector<float> fps;
-	int histNumElements	= 50;
+	const unsigned int histNumElements	= 50;
 
 	// Should not go here!
 	int vIL		= 0;
@@ -24,6 +24,6 @@ public:
 
 private:
 
-	const char* PrintCapacitors(std::string &caps);
+	const char* PrintCapacitors(std::string &caps) const;
 };
 #endif // __WindowConfig_H__

@@ -28,8 +28,8 @@ bool ModuleWindow::Init()
 		}
 		fullwidth	= dm.w;
 		fullheight	= dm.h;
-		width		= fullwidth /1.3;
-		height		= fullheight /1.3;
+		width		= (int)(fullwidth /1.3);
+		height		= (int)(fullheight /1.3);
 
 		// Create window
 		Uint32 flags = SDL_WINDOW_SHOWN |  SDL_WINDOW_OPENGL;

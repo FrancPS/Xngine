@@ -35,7 +35,7 @@ public:
 	void ReceiveEvent(const Event& event);
 
 	// ---------- Getters & Setters ---------- //
-	float GetAspectRatio() { return (App->window->width) / (float)(App->window->height); }
+	float GetAspectRatio() const { return (App->window->width) / (float)(App->window->height); }
 
 	void SetWidth(int _width)	{ width = _width; }
 	void SetHeight(int _height)	{ height = _height; }

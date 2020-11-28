@@ -131,7 +131,7 @@ bool WindowConfig::Draw() {
 
 
 
-const char* WindowConfig::PrintCapacitors(std::string &caps) {
+const char* WindowConfig::PrintCapacitors(std::string &caps) const {
     if (App->hasAVX) {
         caps.append(std::string("AVX"));
     }

@@ -77,7 +77,7 @@ void ModuleEditor::Draw() {
 	}
 }
 
-bool ModuleEditor::ShowMainMenu() {
+void ModuleEditor::ShowMainMenu() {
     // Menu Bar
     if (ImGui::BeginMainMenuBar())
     {
@@ -116,7 +116,6 @@ bool ModuleEditor::ShowMainMenu() {
         }
         ImGui::EndMainMenuBar();
     }
-    return true;
 }
 
 void ModuleEditor::ShowMenuFile()
@@ -188,6 +187,6 @@ void ModuleEditor::ShowAboutWindow() {
     ImGui::End();
 }
 
-void ModuleEditor::ForwardLog(char* _string) {
+void ModuleEditor::ForwardLog(char* _string) const {
     winConsole->AddLog(_string);
 }

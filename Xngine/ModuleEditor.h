@@ -36,15 +36,14 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	void ForwardLog(char* _string);
+	void ForwardLog(char* _string) const;
 
 private:
 
 	void Draw();
-	bool ShowMainMenu();
+	void ShowMainMenu();
 	void ShowMenuFile();
 	void ShowAboutWindow();
-
 
 	friend class WindowMenu;		// is this better than a getter for each win* ?
 };

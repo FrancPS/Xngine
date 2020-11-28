@@ -19,7 +19,7 @@ read-only information about the current loaded meshes and texture (triangle coun
         ImGui::TextUnformatted("It's always [0,0,0]");
     }
     if (ImGui::CollapsingHeader("Geometry")) {
-        for (int i = 0; i < model->GetNumMeshes(); ++i) {
+        for (unsigned int i = 0; i < model->GetNumMeshes(); ++i) {
             ImGui::Text("Mesh %d Num Vertices: %d", i, model->GetMeshes()[i]->numVertex);
         }
     }
@@ -36,7 +36,7 @@ read-only information about the current loaded meshes and texture (triangle coun
         ImVec2 uv_max = ImVec2(1.0f, 1.0f);                 // Lower-right
         ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);   // No tint
         ImVec4 border_col = ImVec4(1.0f, 1.0f, 1.0f, 0.5f); // 50% opaque white
-        ImGui::Image(texturePreview, ImVec2(texPrevWidth, texPrevHeight), uv_min, uv_max, tint_col, border_col);
+        ImGui::Image(texturePreview, ImVec2((float)texPrevWidth, (float)texPrevHeight), uv_min, uv_max, tint_col, border_col);
     }
 
 

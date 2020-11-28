@@ -5,7 +5,7 @@
 #include "Globals.h"
 #include "Geometry/Frustum.h"
 
-class ResourceProgram
+class ResourceProgram //this could be a struct?
 {
 public:
 	ResourceProgram();
