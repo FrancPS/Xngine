@@ -16,6 +16,6 @@ public:
 	bool Draw();
 
 	void Clear() { Buf.clear(); LineOffsets.clear(); }
-	bool CleanUp() { Buf.clear(); LineOffsets.clear(); return true; }
+	bool CleanUp() { Clear(); return true; }
 };
 #endif // __WindowConsole_H__

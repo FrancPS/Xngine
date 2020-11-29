@@ -444,6 +444,7 @@
     <ClInclude Include="WindowConfig.h" />
     <ClInclude Include="WindowProperties.h" />
     <ClInclude Include="ModuleTexture.h" />
+    <ClInclude Include="leaks.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">

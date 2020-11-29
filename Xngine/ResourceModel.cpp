@@ -82,7 +82,6 @@ void ResourceModel::LoadMeshes(const aiScene* const scene) {
 		if (modelMeshes[i]->maxZ > maxZ) maxZ = modelMeshes[i]->maxZ;
 		if (modelMeshes[i]->minZ < minZ) minZ = modelMeshes[i]->minZ;
 	}
-	LOG("%f", sizeX);
 	sizeX = maxX - minX;
 	sizeY = maxY - minY;
 	sizeZ = maxZ - minZ;
@@ -121,9 +120,7 @@ void ResourceModel::UnLoadMaterials() {
 }
 
 void ResourceModel::ResetSizes() {
-	LOG("HKJASNDKALSDJNKLAJDNKSJ;DNAKBKJEWHVBLIKJWVLWEKVJnlkvjb");
 	maxX = maxY = maxZ = 0;
 	minX = minY = minZ = 3.40282e+038; // MAXFLOAT*
 	sizeX = sizeY = sizeZ = 0;
-	LOG("%f", maxX);
 }

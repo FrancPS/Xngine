@@ -229,6 +229,7 @@
     <ClInclude Include="externalLibs\MathGeoLib-master\Math\vec2d.h" />
     <ClInclude Include="externalLibs\MathGeoLib-master\Time\Clock.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="leaks.h" />
     <ClInclude Include="ModuleTexture.h" />
     <ClInclude Include="ResourceMesh.h" />
     <ClInclude Include="ResourceModel.h" />

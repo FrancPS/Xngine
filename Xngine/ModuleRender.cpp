@@ -89,7 +89,6 @@ update_status ModuleRender::PreUpdate()
 
 update_status ModuleRender::Update()
 {
-	LOG("%f,%f,%f", bakerhouse->sizeX, bakerhouse->sizeY, bakerhouse->sizeZ);
 	// Draw the grid and origin
 	int w, h;
 	SDL_GetWindowSize(App->window->window, &w, &h);

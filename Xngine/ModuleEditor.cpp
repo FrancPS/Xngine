@@ -62,6 +62,8 @@ bool ModuleEditor::CleanUp() {
 	for (std::list<Window*>::iterator it = windows.begin(); it != windows.end(); ++it)
 		(*it)->CleanUp();
 
+    windows.erase(windows.begin(), windows.end());
+
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown(); 
 	ImGui::DestroyContext();
