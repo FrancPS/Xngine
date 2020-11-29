@@ -43,7 +43,7 @@ public:
 	bool 	hasSSE3		= false;
 	bool 	hasSSE41	= false;
 	bool 	hasSSE42	= false;
-	const char* gpu;
+	const char* gpu		= nullptr;
 
 	// Software
 	char vSDL[10]{};

@@ -29,7 +29,7 @@ char* ResourceProgram::LoadShaderSource(const char* const shader_file_name)
 
 unsigned ResourceProgram::CompileShader(const unsigned int type, const char* const source)
 {
-	unsigned shader_id = glCreateShader(type);
+	unsigned int shader_id = glCreateShader(type);
 	glShaderSource(shader_id, 1, &source, 0);
 	glCompileShader(shader_id);
 	int res = GL_FALSE;
@@ -47,6 +47,7 @@ unsigned ResourceProgram::CompileShader(const unsigned int type, const char* con
 			free(info);
 		}
 	}
+	free((void*)source);
 	return shader_id;
 }
 

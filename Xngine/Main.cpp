@@ -95,7 +95,9 @@ int main(int argc, char ** argv)
 
 	delete App;
 	App = nullptr;
+# ifdef _DEBUG
 	_CrtDumpMemoryLeaks();
+# endif
 	LOG("Bye :)\n");
 	return main_return;
 }
